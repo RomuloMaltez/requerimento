@@ -1,0 +1,380 @@
+/* Estilos gerais */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.4;
+    color: #333;
+    background-color: #f5f5f5;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+}
+
+.form-container {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabeçalho e logo */
+.logo-center {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.brasao-img {
+    max-width: 100px;
+    height: auto;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.title {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 3px;
+}
+
+.form-title {
+    text-align: center;
+    margin: 15px 0;
+    font-size: 1.3rem;
+}
+
+.form-intro {
+    margin-bottom: 20px;
+}
+
+/* Seções do formulário */
+.form-section {
+    border: 1px solid #eee;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.section-title {
+    background-color: #f0f0f0;
+    padding: 8px 12px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Formulário */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    padding: 15px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Checkbox e Radio */
+.checkbox-group,
+.radio-group {
+    padding: 15px;
+}
+
+.checkbox-item,
+.radio-item {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: flex-start;
+}
+
+.checkbox-input,
+.radio-input {
+    margin-right: 10px;
+    margin-top: 3px;
+}
+
+.checkbox-label,
+.radio-label {
+    flex: 1;
+}
+
+.checkbox-note {
+    font-style: italic;
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+/* Containers escondidos */
+.hidden {
+    display: none;
+}
+
+.outros-container,
+.ambiente-container,
+.descricao-container {
+    margin-top: 10px;
+    margin-left: 25px;
+}
+
+/* Termos de responsabilidade */
+.termo-bg {
+    background-color: #f9f9f9;
+}
+
+.termo-content {
+    padding: 15px;
+}
+
+.termo-list {
+    margin-left: 20px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.termo-list li {
+    margin-bottom: 8px;
+}
+
+.termo-list li a {
+    color: #0066cc;
+    text-decoration: underline;
+}
+
+.termo-list li a:hover {
+    color: #004080;
+}
+
+.termo-aceite {
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+/* Assinaturas */
+.assinaturas-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    padding: 15px;
+}
+
+.assinatura-box {
+    text-align: center;
+}
+
+.assinatura-linha {
+    border-bottom: 1px solid #000;
+    margin-bottom: 5px;
+    height: 40px;
+}
+
+.assinatura-label {
+    font-size: 0.9rem;
+}
+
+.assinatura-nota {
+    text-align: center;
+    font-style: italic;
+    font-size: 0.8rem;
+    margin-top: 10px;
+}
+
+/* Rodapé */
+.form-footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.impressao-info {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* Botão de impressão */
+.botao-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.botao-imprimir {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.botao-imprimir:hover {
+    background-color: #45a049;
+}
+
+/* Mensagens de erro */
+.error-container {
+    background-color: #ffeeee;
+    border: 1px solid #ff0000;
+    border-radius: 4px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.error-title {
+    color: #cc0000;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.error-list {
+    margin-left: 20px;
+    color: #cc0000;
+}
+
+.error {
+    border-color: #cc0000 !important;
+    background-color: #fff0f0 !important;
+}
+
+/* Estilos específicos para impressão */
+@media print {
+    body {
+        background-color: #fff;
+        font-size: 12pt;
+    }
+    
+    .container, .form-container {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        border: none;
+        box-shadow: none;
+    }
+    
+    .form-section {
+        page-break-inside: avoid;
+        margin-bottom: 10px;
+        border: none;
+    }
+    
+    .section-title {
+        background-color: #f0f0f0;
+        padding: 5px 10px;
+        margin-bottom: 5px;
+    }
+    
+    .form-grid, .checkbox-group, .radio-group, .termo-content, .assinaturas-container {
+        padding: 5px 10px;
+    }
+    
+    .form-group {
+        margin-bottom: 5px;
+    }
+    
+    .checkbox-item, .radio-item {
+        margin-bottom: 3px;
+    }
+    
+    .termo-list li {
+        margin-bottom: 3px;
+    }
+    
+    .botao-container, .debug-grid {
+        display: none;
+    }
+    
+    /* Reduzir espaço vertical entre elementos */
+    .logo-center {
+        margin-bottom: 5px;
+    }
+    
+    .header {
+        margin-bottom: 5px;
+    }
+    
+    .title, .subtitle {
+        margin-bottom: 2px;
+    }
+    
+    .form-title {
+        margin: 5px 0;
+    }
+    
+    .form-intro {
+        margin-bottom: 5px;
+    }
+    
+    .form-label {
+        margin-bottom: 2px;
+    }
+    
+    /* Ajustar altura das assinaturas */
+    .assinatura-linha {
+        height: 30px;
+    }
+    
+    /* Espaçamento específico para PDF */
+    .termo-aceite {
+        margin-top: 5px;
+    }
+    
+    .assinatura-nota {
+        margin-top: 5px;
+    }
+    
+    .form-footer {
+        margin-top: 10px;
+    }
+    
+    .impressao-info {
+        margin-top: 5px;
+    }
+}
