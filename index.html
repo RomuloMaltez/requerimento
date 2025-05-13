@@ -5,57 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Requerimento - Uso de Sistemas Tributários</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
     <div class="container">
         <div class="form-container" id="form-container">
-            <!-- Mensagens de erro -->
             <div id="error-container" class="error-container hidden">
                 <p class="error-title">Corrija os seguintes erros:</p>
                 <ul id="error-list" class="error-list"></ul>
             </div>
 
-            <!-- Logo centralizado -->
-            <div class="logo-center">
-                <img src="logo_portovelho.png" alt="Logo da Prefeitura de Porto Velho" class="brasao-img">
-            </div>
+            <!-- Cabeçalho mais compacto -->
+            <div class="header-compact">
+                <div class="logo-center">
+                    <img src="logo_portovelho.png" alt="Logo da Prefeitura de Porto Velho" class="brasao-img">
+                </div>
 
-            <!-- Cabeçalho -->
-            <div class="header">
                 <div class="title-container">
                     <h1 class="title">PREFEITURA MUNICIPAL DE PORTO VELHO</h1>
                     <h2 class="subtitle">SECRETARIA MUNICIPAL DE FAZENDA</h2>
                     <h3 class="subtitle">SUBSECRETARIA DA RECEITA MUNICIPAL</h3>
                 </div>
+                
+                <h4 class="form-title">REQUERIMENTO - USO DE SISTEMAS TRIBUTÁRIOS</h4>
             </div>
 
-            <h4 class="form-title">REQUERIMENTO - USO DE SISTEMAS TRIBUTÁRIOS</h4>
-            
             <p class="form-intro">
                 Ilmo. (a) Sr. (a) Secretário (a) Municipal de Fazenda, requeremos o acesso ao seguinte sistema:
             </p>
 
             <form id="requerimento-form">
-                <!-- Escolher o Sistema -->
                 <div class="form-section">
                     <h5 class="section-title">ESCOLHER O SISTEMA</h5>
                     <div class="checkbox-group">
                         <div class="checkbox-item">
-                            <input 
-                                type="checkbox" 
-                                id="gpiTributario" 
-                                name="sistema" 
-                                value="gpiTributario" 
+                            <input
+                                type="checkbox"
+                                id="gpiTributario"
+                                name="sistema"
+                                value="gpiTributario"
                                 class="checkbox-input"
                             >
                             <label for="gpiTributario" class="checkbox-label">1. Sistema de Gestão Integrada – GPI Tributário;</label>
                         </div>
                         <div class="checkbox-item">
-                            <input 
-                                type="checkbox" 
-                                id="semfazonlineNFSe" 
-                                name="sistema" 
-                                value="semfazonlineNFSe" 
+                            <input
+                                type="checkbox"
+                                id="semfazonlineNFSe"
+                                name="sistema"
+                                value="semfazonlineNFSe"
                                 class="checkbox-input"
                             >
                             <label for="semfazonlineNFSe" class="checkbox-label">2. Portal Semfazonline NFS-e Retenção do ISSQN.</label>
@@ -64,25 +62,24 @@
                     </div>
                 </div>
 
-                <!-- Dados do Requerente -->
                 <div class="form-section">
                     <h5 class="section-title">DADOS DO REQUERENTE</h5>
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="nome" class="form-label">Nome:</label>
-                            <input 
-                                type="text" 
-                                id="nome" 
-                                name="nome" 
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
                                 class="form-input"
                             >
                         </div>
                         <div class="form-group">
                             <label for="cpf" class="form-label">CPF:</label>
-                            <input 
-                                type="text" 
-                                id="cpf" 
-                                name="cpf" 
+                            <input
+                                type="text"
+                                id="cpf"
+                                name="cpf"
                                 class="form-input"
                                 placeholder="000.000.000-00"
                                 maxlength="14"
@@ -90,36 +87,36 @@
                         </div>
                         <div class="form-group">
                             <label for="cargo" class="form-label">Cargo:</label>
-                            <input 
-                                type="text" 
-                                id="cargo" 
-                                name="cargo" 
+                            <input
+                                type="text"
+                                id="cargo"
+                                name="cargo"
                                 class="form-input"
                             >
                         </div>
                         <div class="form-group">
                             <label for="funcao" class="form-label">Função:</label>
-                            <input 
-                                type="text" 
-                                id="funcao" 
-                                name="funcao" 
+                            <input
+                                type="text"
+                                id="funcao"
+                                name="funcao"
                                 class="form-input"
                             >
                         </div>
                         <div class="form-group full-width">
                             <label for="lotacao" class="form-label">Lotação:</label>
-                            <input 
-                                type="text" 
-                                id="lotacao" 
-                                name="lotacao" 
+                            <input
+                                type="text"
+                                id="lotacao"
+                                name="lotacao"
                                 class="form-input"
                             >
                         </div>
                         <div class="form-group">
                             <label for="vinculo" class="form-label">Vínculo:</label>
-                            <select 
-                                id="vinculo" 
-                                name="vinculo" 
+                            <select
+                                id="vinculo"
+                                name="vinculo"
                                 class="form-select"
                             >
                                 <option value="">Selecione um vínculo</option>
@@ -130,83 +127,82 @@
                         </div>
                         <div class="form-group">
                             <label for="matricula" class="form-label">Matrícula:</label>
-                            <input 
-                                type="text" 
-                                id="matricula" 
-                                name="matricula" 
+                            <input
+                                type="text"
+                                id="matricula"
+                                name="matricula"
                                 class="form-input"
                             >
                         </div>
                         <div class="form-group">
                             <label for="email" class="form-label">E-mail:</label>
-                            <input 
-                                type="email" 
-                                id="email" 
-                                name="email" 
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
                                 class="form-input"
                             >
                         </div>
                     </div>
                 </div>
 
-                <!-- Motivação -->
                 <div class="form-section">
                     <h5 class="section-title">MOTIVAÇÃO – Para uso do sistema</h5>
                     <div class="radio-group">
                         <div class="radio-item">
-                            <input 
-                                type="radio" 
-                                id="auditorTesouro" 
-                                name="motivacao" 
-                                value="auditorTesouro" 
+                            <input
+                                type="radio"
+                                id="auditorTesouro"
+                                name="motivacao"
+                                value="auditorTesouro"
                                 class="radio-input"
                             >
                             <label for="auditorTesouro" class="radio-label">Auditor do Tesouro Municipal, em exercício regular das suas atribuições legais;</label>
                         </div>
                         <div class="radio-item">
-                            <input 
-                                type="radio" 
-                                id="servidorSubsecretaria" 
-                                name="motivacao" 
-                                value="servidorSubsecretaria" 
+                            <input
+                                type="radio"
+                                id="servidorSubsecretaria"
+                                name="motivacao"
+                                value="servidorSubsecretaria"
                                 class="radio-input"
                             >
                             <label for="servidorSubsecretaria" class="radio-label">Servidor lotado na Subsecretaria de Receita Municipal ou na SEMFAZ;</label>
                         </div>
                         <div class="radio-item">
-                            <input 
-                                type="radio" 
-                                id="procuradorMunicipal" 
-                                name="motivacao" 
-                                value="procuradorMunicipal" 
+                            <input
+                                type="radio"
+                                id="procuradorMunicipal"
+                                name="motivacao"
+                                value="procuradorMunicipal"
                                 class="radio-input"
                             >
                             <label for="procuradorMunicipal" class="radio-label">Procurador Municipal, em exercício regular das suas atribuições legais;</label>
                         </div>
                         <div class="radio-item">
-                            <input 
-                                type="radio" 
-                                id="servidorPGM" 
-                                name="motivacao" 
-                                value="servidorPGM" 
+                            <input
+                                type="radio"
+                                id="servidorPGM"
+                                name="motivacao"
+                                value="servidorPGM"
                                 class="radio-input"
                             >
                             <label for="servidorPGM" class="radio-label">Servidor lotado na Procuradoria Geral do Município – PGM;</label>
                         </div>
                         <div class="radio-item">
-                            <input 
-                                type="radio" 
-                                id="outros" 
-                                name="motivacao" 
-                                value="outros" 
+                            <input
+                                type="radio"
+                                id="outros"
+                                name="motivacao"
+                                value="outros"
                                 class="radio-input"
                             >
                             <label for="outros" class="radio-label">Outros (especificar):</label>
                         </div>
                         <div id="outrosContainer" class="outros-container hidden">
-                            <select 
-                                id="outrosEspecificar" 
-                                name="outrosEspecificar" 
+                            <select
+                                id="outrosEspecificar"
+                                name="outrosEspecificar"
                                 class="form-select"
                             >
                                 <option value="">Selecione uma secretaria</option>
@@ -221,43 +217,42 @@
                     </div>
                 </div>
 
-                <!-- Perfil de Acesso -->
                 <div class="form-section">
                     <h5 class="section-title">PERFIL DE ACESSO</h5>
                     <div class="checkbox-group">
                         <div class="checkbox-item">
-                            <input 
-                                type="checkbox" 
-                                id="perfilExiste" 
-                                name="perfilAcesso" 
-                                value="perfilExiste" 
+                            <input
+                                type="checkbox"
+                                id="perfilExiste"
+                                name="perfilAcesso"
+                                value="perfilExiste"
                                 class="checkbox-input"
                             >
                             <label for="perfilExiste" class="checkbox-label">Perfil de Acesso (Ambiente) já existe. Nome do ambiente:</label>
                         </div>
                         <div id="ambienteContainer" class="ambiente-container hidden">
-                            <select 
-                                id="nomeAmbiente" 
-                                name="nomeAmbiente" 
+                            <select
+                                id="nomeAmbiente"
+                                name="nomeAmbiente"
                                 class="form-select"
                             >
                                 <option value="">Selecione primeiro o sistema e a motivação</option>
                             </select>
                         </div>
                         <div class="checkbox-item">
-                            <input 
-                                type="checkbox" 
-                                id="perfilNaoExiste" 
-                                name="perfilAcesso" 
-                                value="perfilNaoExiste" 
+                            <input
+                                type="checkbox"
+                                id="perfilNaoExiste"
+                                name="perfilAcesso"
+                                value="perfilNaoExiste"
                                 class="checkbox-input"
                             >
                             <label for="perfilNaoExiste" class="checkbox-label">Perfil de Acesso (Ambiente) não existe. Descrever funções do trabalho e quais módulos e dados necessita acessar:</label>
                         </div>
                         <div id="descricaoContainer" class="descricao-container hidden">
-                            <textarea 
-                                id="descricaoFuncoes" 
-                                name="descricaoFuncoes" 
+                            <textarea
+                                id="descricaoFuncoes"
+                                name="descricaoFuncoes"
                                 class="form-textarea"
                                 rows="4"
                             ></textarea>
@@ -265,16 +260,15 @@
                     </div>
                 </div>
 
-                <!-- Data -->
                 <div class="form-section">
                     <h5 class="section-title">DATA DO REQUERIMENTO</h5>
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="dia" class="form-label">Dia:</label>
-                            <input 
-                                type="text" 
-                                id="dia" 
-                                name="dia" 
+                            <input
+                                type="text"
+                                id="dia"
+                                name="dia"
                                 class="form-input"
                                 maxlength="2"
                                 placeholder="DD"
@@ -282,10 +276,10 @@
                         </div>
                         <div class="form-group">
                             <label for="mes" class="form-label">Mês:</label>
-                            <input 
-                                type="text" 
-                                id="mes" 
-                                name="mes" 
+                            <input
+                                type="text"
+                                id="mes"
+                                name="mes"
                                 class="form-input"
                                 maxlength="10"
                                 placeholder="mês por extenso"
@@ -293,10 +287,10 @@
                         </div>
                         <div class="form-group">
                             <label for="ano" class="form-label">Ano:</label>
-                            <input 
-                                type="text" 
-                                id="ano" 
-                                name="ano" 
+                            <input
+                                type="text"
+                                id="ano"
+                                name="ano"
                                 class="form-input"
                                 maxlength="4"
                                 placeholder="AAAA"
@@ -305,7 +299,6 @@
                     </div>
                 </div>
 
-                <!-- Termo de Responsabilidade -->
                 <div class="form-section termo-bg">
                     <h5 class="section-title">TERMO DE RESPONSABILIDADE</h5>
                     <div class="termo-content">
@@ -319,12 +312,12 @@
                             <li>Devo comunicar imediatamente à SEMFAZ qualquer suspeita de violação de segurança ou acesso indevido.</li>
                              <li><a href="https://semfaz.portovelho.ro.gov.br/uploads/arquivos/2019/08/31787/1742560714anexo-ii-modelo-de-termo-de-responsabilidade.pdf" target="_blank">Ler o Termo de Responsabilidade completo</a>.</li>
                         </ol>
-                        
+
                         <div class="termo-aceite">
-                            <input 
-                                type="checkbox" 
-                                id="aceitoTermos" 
-                                name="aceitoTermos" 
+                            <input
+                                type="checkbox"
+                                id="aceitoTermos"
+                                name="aceitoTermos"
                                 class="checkbox-input"
                             >
                             <label for="aceitoTermos" class="checkbox-label bold">
@@ -334,25 +327,24 @@
                     </div>
                 </div>
 
-                <!-- Dados do Superior Imediato -->
                 <div class="form-section">
                     <h5 class="section-title">DADOS DO SUPERIOR IMEDIATO</h5>
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="superiorNome" class="form-label">Nome:</label>
-                            <input 
-                                type="text" 
-                                id="superiorNome" 
-                                name="superiorNome" 
+                            <input
+                                type="text"
+                                id="superiorNome"
+                                name="superiorNome"
                                 class="form-input"
                             >
                         </div>
                         <div class="form-group">
                             <label for="superiorCPF" class="form-label">CPF:</label>
-                            <input 
-                                type="text" 
-                                id="superiorCPF" 
-                                name="superiorCPF" 
+                            <input
+                                type="text"
+                                id="superiorCPF"
+                                name="superiorCPF"
                                 class="form-input"
                                 maxlength="14"
                                 placeholder="000.000.000-00"
@@ -360,61 +352,56 @@
                         </div>
                         <div class="form-group">
                             <label for="superiorCargo" class="form-label">Cargo:</label>
-                            <input 
-                                type="text" 
-                                id="superiorCargo" 
-                                name="superiorCargo" 
+                            <input
+                                type="text"
+                                id="superiorCargo"
+                                name="superiorCargo"
                                 class="form-input"
                             >
                         </div>
                     </div>
                 </div>
 
-                <!-- Área para Assinaturas -->
                 <div class="form-section">
                     <h5 class="section-title">ASSINATURAS</h5>
-                    
+
                     <div class="assinaturas-container">
                         <div class="assinatura-box">
                             <div class="assinatura-linha"></div>
                             <p class="assinatura-label">Assinatura do Requerente</p>
                         </div>
-                        
+
                         <div class="assinatura-box">
                             <div class="assinatura-linha"></div>
                             <p class="assinatura-label">Assinatura do Superior Imediato</p>
                         </div>
                     </div>
-                    
+
                     <p class="assinatura-nota">
                         Este documento pode ser assinado digitalmente pelo ePMPV ou por outro meio
                     </p>
                 </div>
 
-                <!-- Informações de Rodapé -->
                 <div class="form-footer">
                     <p>Anexo I – Requerimento de Uso de Sistema</p>
                     <p>Instrução Normativa n.º 002/2024/GAB/SEMFAZ</p>
                 </div>
 
-                <!-- Mensagem para impressão -->
                 <div class="impressao-info">
                     <p>Documento gerado eletronicamente em <span id="dataAtual"></span></p>
                 </div>
-                
-                <!-- Elemento de referência para depuração do layout impresso (visível apenas durante design) -->
+
                 <div class="debug-grid" style="display: none;">
                     <div class="debug-line"></div>
                 </div>
 
-                <!-- Botão de Impressão -->
                 <div class="botao-container">
                     <button
                         type="submit"
                         id="btnImprimir"
                         class="botao-imprimir"
                     >
-                        Gerar e Imprimir PDF
+                        Gerar e Baixar PDF
                     </button>
                 </div>
             </form>
