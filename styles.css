@@ -30,44 +30,68 @@ body {
 /* Cabeçalho e logo */
 .logo-center {
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 5px; /* Reduzido de 10px para 5px */
 }
 
 .brasao-img {
-    max-width: 100px;
+    max-width: 80px; /* Reduzido de 100px para 80px */
     height: auto;
 }
 
 .header {
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px; /* Reduzido de 15px para 10px */
 }
 
 .title {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
+    font-size: 1.4rem; /* Ajustado de 1.5rem */
+    margin-bottom: 3px; /* Reduzido de 5px para 3px */
 }
 
 .subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 3px;
+    font-size: 1.1rem; /* Ajustado de 1.2rem */
+    margin-bottom: 2px; /* Reduzido de 3px para 2px */
 }
 
 .form-title {
     text-align: center;
-    margin: 15px 0;
-    font-size: 1.3rem;
+    margin: 10px 0; /* Reduzido de 15px para 10px */
+    font-size: 1.2rem; /* Ajustado de 1.3rem */
 }
 
 .form-intro {
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Reduzido de 20px para 15px */
+}
+
+/* Estilo para o cabeçalho compacto */
+.header-compact {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.header-compact .logo-center {
+    margin-bottom: 3px;
+}
+
+.header-compact .title-container {
+    text-align: center;
+}
+
+.header-compact .title {
+    margin-top: 0;
+}
+
+.header-compact .form-title {
+    margin-top: 5px;
 }
 
 /* Seções do formulário */
 .form-section {
     border: 1px solid #eee;
     border-radius: 5px;
-    margin-bottom: 20px;
+    margin-bottom: 15px; /* Reduzido de 20px para 15px */
     overflow: hidden;
 }
 
@@ -289,11 +313,13 @@ body {
     body {
         background-color: #fff;
         font-size: 12pt;
+        margin: 0;
+        padding: 0;
     }
     
     .container, .form-container {
         margin: 0;
-        padding: 0;
+        padding: 10px; /* Reduzido de 20px para 10px */
         width: 100%;
         border: none;
         box-shadow: none;
@@ -301,7 +327,7 @@ body {
     
     .form-section {
         page-break-inside: avoid;
-        margin-bottom: 10px;
+        margin-bottom: 8px; /* Reduzido de 10px para 8px */
         border: none;
     }
     
@@ -333,11 +359,11 @@ body {
     
     /* Reduzir espaço vertical entre elementos */
     .logo-center {
-        margin-bottom: 5px;
+        margin-bottom: 2px; /* Reduzido para 2px */
     }
     
     .header {
-        margin-bottom: 5px;
+        margin-bottom: 3px; /* Reduzido para 3px */
     }
     
     .title, .subtitle {
@@ -376,5 +402,18 @@ body {
     
     .impressao-info {
         margin-top: 5px;
+    }
+    
+    /* Estilos específicos para o cabeçalho compacto na impressão */
+    .header-compact {
+        margin-bottom: 5px;
+    }
+    
+    .header-compact .logo-center {
+        margin-bottom: 2px;
+    }
+    
+    .header-compact .form-title {
+        margin-top: 3px;
     }
 }
