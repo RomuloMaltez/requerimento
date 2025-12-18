@@ -18,6 +18,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const descricaoContainer = document.getElementById('descricaoContainer');
     const cpfInput = document.getElementById('cpf');
     const superiorCPFInput = document.getElementById('superiorCPF');
+    const diaInput = document.getElementById('dia');
+    const anoInput = document.getElementById('ano');
     const gpiTributarioCheckbox = document.getElementById('gpiTributario');
     const semfazonlineNFSeCheckbox = document.getElementById('semfazonlineNFSe');
     const auditorTesouroRadio = document.getElementById('auditorTesouro');
@@ -93,10 +95,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function formatarCPF(cpf) { 
         cpf = cpf.replace(/\D/g, ''); 
-        if (cpf.length <= 11) { 
-            cpf = cpf.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2').replace(/(-\d{2})\d+?$/, '$1'); 
-        } 
-        return cpf; 
+        if (cpf.length > 11) {
+            cpf = cpf.slice(0, 11);
+        }
+        return cpf
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d)/, '$1.$2')
+            .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
     }
     
     function exibirErros(erros) { 
@@ -255,6 +260,14 @@ document.addEventListener('DOMContentLoaded', function() {
     superiorCPFInput.addEventListener('input', function() { 
         this.value = formatarCPF(this.value); 
     });
+
+    diaInput.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').slice(0, 2);
+    });
+
+    anoInput.addEventListener('input', function() {
+        this.value = this.value.replace(/\D/g, '').slice(0, 4);
+    });
     
     [gpiTributarioCheckbox, semfazonlineNFSeCheckbox].forEach(checkbox => { 
         checkbox.addEventListener('change', function() { 
@@ -311,6 +324,38 @@ document.addEventListener('DOMContentLoaded', function() {
         const botaoContainerOriginal = document.querySelector('.botao-container');
         if (botaoContainerOriginal) botaoContainerOriginal.style.display = 'none';
 
+        // --- MELHORIA: Substituir textarea por DIV para evitar que o texto saia "quebrado" ou cortado no PDF ---
+        const textareas = formContainer.querySelectorAll('textarea');
+        const replacements = [];
+        
+        textareas.forEach(textarea => {
+            // Criar um elemento div para substituir o textarea na renderização do PDF
+            const div = document.createElement('div');
+            // Preservar as quebras de linha substituindo \n por <br> ou usando whitespace-pre-wrap
+            div.textContent = textarea.value;
+            
+            // Copiar estilos e classes do textarea para a div
+            div.className = textarea.className + ' whitespace-pre-wrap break-all min-h-[100px] bg-white';
+            
+            // Estilos adicionais para garantir que se pareça com o textarea original mas expanda conforme o conteúdo
+            div.style.border = getComputedStyle(textarea).border;
+            div.style.padding = getComputedStyle(textarea).padding;
+            div.style.borderRadius = getComputedStyle(textarea).borderRadius;
+            div.style.fontSize = getComputedStyle(textarea).fontSize;
+            div.style.fontFamily = getComputedStyle(textarea).fontFamily;
+            div.style.lineHeight = getComputedStyle(textarea).lineHeight;
+            div.style.width = '100%';
+            div.style.display = 'block';
+            div.style.overflowWrap = 'break-word';
+            div.style.wordBreak = 'break-all'; // Crucial para palavras muito longas sem espaços
+            
+            // Inserir a div antes do textarea e esconder o textarea
+            textarea.parentNode.insertBefore(div, textarea);
+            textarea.style.display = 'none';
+            
+            replacements.push({ textarea, div });
+        });
+
         // Aplicar estilos temporários para compactar o conteúdo
         const originalPadding = formContainer.style.padding;
         formContainer.style.padding = '10px';
@@ -356,6 +401,12 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("Ocorreu um erro ao gerar o PDF. Por favor, verifique o console do navegador (F12) para mais detalhes técnicos e tente novamente.");
             throw err;
         } finally {
+            // --- RESTAURAÇÃO: Voltar os textareas ao normal ---
+            replacements.forEach(({ textarea, div }) => {
+                textarea.style.display = '';
+                div.remove();
+            });
+
             // Restaurar estilos originais
             formContainer.style.padding = originalPadding;
             if (logoImage) {
@@ -395,5 +446,117 @@ document.addEventListener('DOMContentLoaded', function() {
         atualizarOpcoesAmbiente();
     } else {
         nomeAmbienteSelect.innerHTML = '<option value="">Selecione primeiro o sistema e a motivação</option>';
+    }
+
+    // --- Funcionalidade de Busca (Ctrl+F) ---
+    const searchForm = document.getElementById('site-search-form');
+    const searchInput = document.getElementById('site-search');
+    const SEARCH_ROOT_SELECTOR = '[data-search-root]';
+    const HIGHLIGHT_ATTRIBUTE = 'data-search-highlight';
+    const HIGHLIGHT_CLASS_NAME = 'site-search-highlight';
+
+    function clearHighlights() {
+        const highlights = document.querySelectorAll(`mark[${HIGHLIGHT_ATTRIBUTE}]`);
+        highlights.forEach(highlight => {
+            const parent = highlight.parentNode;
+            if (parent) {
+                parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+                parent.normalize();
+            }
+        });
+    }
+
+    function highlightMatches(term) {
+        const normalizedTerm = term.toLowerCase();
+        if (!normalizedTerm) return [];
+
+        const hits = [];
+        const roots = document.querySelectorAll(SEARCH_ROOT_SELECTOR);
+
+        roots.forEach(root => {
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    if (!node.textContent.trim()) return NodeFilter.FILTER_REJECT;
+                    const parent = node.parentElement;
+                    if (!parent || 
+                        parent.closest(`[${HIGHLIGHT_ATTRIBUTE}]`) || 
+                        parent.closest('script, style') || 
+                        parent.closest('[aria-hidden="true"]')) {
+                        return NodeFilter.FILTER_REJECT;
+                    }
+                    return NodeFilter.FILTER_ACCEPT;
+                }
+            });
+
+            let node;
+            const nodesToProcess = [];
+            while (node = walker.nextNode()) nodesToProcess.push(node);
+
+            nodesToProcess.forEach(textNode => {
+                let remainingText = textNode.data;
+                let matchIndex = remainingText.toLowerCase().indexOf(normalizedTerm);
+                let currentNode = textNode;
+
+                while (matchIndex !== -1) {
+                    const matchNode = currentNode.splitText(matchIndex);
+                    const afterMatchNode = matchNode.splitText(normalizedTerm.length);
+                    
+                    const highlight = document.createElement('mark');
+                    highlight.className = HIGHLIGHT_CLASS_NAME;
+                    highlight.setAttribute(HIGHLIGHT_ATTRIBUTE, 'true');
+                    
+                    matchNode.parentNode.insertBefore(highlight, matchNode);
+                    highlight.appendChild(matchNode);
+                    hits.push(highlight);
+
+                    currentNode = afterMatchNode;
+                    remainingText = currentNode.data;
+                    matchIndex = remainingText ? remainingText.toLowerCase().indexOf(normalizedTerm) : -1;
+                }
+            });
+        });
+
+        return hits;
+    }
+
+    if (searchForm) {
+        const searchToggle = document.getElementById('search-toggle');
+
+        if (searchToggle) {
+            searchToggle.addEventListener('click', function(e) {
+                e.stopPropagation();
+                searchForm.classList.toggle('hidden');
+                searchForm.classList.toggle('flex');
+                if (!searchForm.classList.contains('hidden')) {
+                    searchInput.focus();
+                }
+            });
+
+            // Fechar ao clicar fora
+            document.addEventListener('click', function(e) {
+                if (!searchForm.contains(e.target) && e.target !== searchToggle) {
+                    searchForm.classList.add('hidden');
+                    searchForm.classList.remove('flex');
+                }
+            });
+        }
+
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = searchInput.value.trim();
+            clearHighlights();
+
+            if (query.length < 3) {
+                alert('Por favor, digite pelo menos 3 caracteres para buscar.');
+                return;
+            }
+
+            const hits = highlightMatches(query);
+            if (hits.length > 0) {
+                hits[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                alert('Nenhum resultado encontrado na página.');
+            }
+        });
     }
 });

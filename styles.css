@@ -1,4 +1,15 @@
 /* Estilos gerais */
+:root {
+    --pv-blue-900: #1e3a5f;
+    --pv-blue-700: #26476f;
+    --pv-yellow-500: #f2c94c;
+    --pv-gray-100: #f5f5f5;
+    --pv-gray-200: #e5e7eb;
+    --pv-gray-500: #6b7280;
+    --pv-gray-700: #374151;
+    --pv-green-600: #70b643;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -6,168 +17,52 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
-    line-height: 1.4;
-    color: #333;
-    background-color: #f5f5f5;
+    font-family: 'Poppins', Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--pv-gray-700);
+    background-color: var(--pv-gray-100);
 }
 
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-}
+/* O container principal agora é controlado por Tailwind no index.html */
 
-.form-container {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Cabeçalho e logo */
-.logo-center {
-    text-align: center;
-    margin-bottom: 5px; /* Reduzido de 10px para 5px */
-}
-
-.brasao-img {
-    max-width: 80px; /* Reduzido de 100px para 80px */
-    height: auto;
-}
-
-.header {
-    text-align: center;
-    margin-bottom: 10px; /* Reduzido de 15px para 10px */
-}
-
-.title {
-    font-size: 1.4rem; /* Ajustado de 1.5rem */
-    margin-bottom: 3px; /* Reduzido de 5px para 3px */
-}
-
-.subtitle {
-    font-size: 1.1rem; /* Ajustado de 1.2rem */
-    margin-bottom: 2px; /* Reduzido de 3px para 2px */
-}
-
-.form-title {
-    text-align: center;
-    margin: 10px 0; /* Reduzido de 15px para 10px */
-    font-size: 1.2rem; /* Ajustado de 1.3rem */
-}
-
-.form-intro {
-    margin-bottom: 15px; /* Reduzido de 20px para 15px */
-}
-
-/* Estilo para o cabeçalho compacto */
-.header-compact {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.header-compact .logo-center {
-    margin-bottom: 3px;
-}
-
-.header-compact .title-container {
-    text-align: center;
-}
-
-.header-compact .title {
-    margin-top: 0;
-}
-
-.header-compact .form-title {
-    margin-top: 5px;
-}
-
-/* Seções do formulário */
-.form-section {
-    border: 1px solid #eee;
-    border-radius: 5px;
-    margin-bottom: 15px; /* Reduzido de 20px para 15px */
-    overflow: hidden;
-}
-
-.section-title {
-    background-color: #f0f0f0;
-    padding: 8px 12px;
-    margin: 0;
-    font-weight: bold;
-    font-size: 1rem;
-}
-
-/* Formulário */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    padding: 15px;
-}
-
-.form-group {
-    margin-bottom: 10px;
-}
-
-.full-width {
-    grid-column: span 2;
-}
-
-.form-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-
+/* Ajustes para o formulário */
 .form-input,
 .form-select,
 .form-textarea {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 10px;
+    border: 1px solid var(--pv-gray-200);
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+    outline: none;
+    border-color: var(--pv-blue-900);
+    box-shadow: 0 0 0 3px rgba(30, 58, 95, 0.1);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+    color: var(--pv-blue-900);
     font-size: 0.9rem;
 }
 
-.form-textarea {
-    resize: vertical;
-    min-height: 80px;
+/* Garantir que o texto quebre no textarea e em outros inputs */
+textarea, input {
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
-/* Checkbox e Radio */
-.checkbox-group,
-.radio-group {
-    padding: 15px;
-}
-
-.checkbox-item,
-.radio-item {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: flex-start;
-}
-
-.checkbox-input,
-.radio-input {
-    margin-right: 10px;
-    margin-top: 3px;
-}
-
-.checkbox-label,
-.radio-label {
-    flex: 1;
-}
-
-.checkbox-note {
-    font-style: italic;
-    margin-top: 10px;
-    font-size: 0.9rem;
+textarea#descricaoFuncoes {
+    white-space: pre-wrap;
+    word-break: break-word;
 }
 
 /* Containers escondidos */
@@ -175,245 +70,60 @@ body {
     display: none;
 }
 
-.outros-container,
-.ambiente-container,
-.descricao-container {
-    margin-top: 10px;
-    margin-left: 25px;
+/* Estilos para busca */
+.site-search-highlight {
+    background-color: #fff3a4;
+    color: inherit;
+    padding: 0 0.15em;
+    border-radius: 0.2rem;
+    box-shadow: 0 0 0 2px rgba(255, 235, 59, 0.35);
 }
 
-/* Termos de responsabilidade */
-.termo-bg {
-    background-color: #f9f9f9;
+.print-block {
+    display: none;
 }
 
-.termo-content {
-    padding: 15px;
-}
-
-.termo-list {
-    margin-left: 20px;
-    margin-top: 10px;
-    margin-bottom: 15px;
-}
-
-.termo-list li {
-    margin-bottom: 8px;
-}
-
-.termo-list li a {
-    color: #0066cc;
-    text-decoration: underline;
-}
-
-.termo-list li a:hover {
-    color: #004080;
-}
-
-.termo-aceite {
-    margin-top: 15px;
-    font-weight: bold;
-}
-
-.bold {
-    font-weight: bold;
-}
-
-/* Assinaturas */
-.assinaturas-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    padding: 15px;
-}
-
-.assinatura-box {
-    text-align: center;
-}
-
-.assinatura-linha {
-    border-bottom: 1px solid #000;
-    margin-bottom: 5px;
-    height: 40px;
-}
-
-.assinatura-label {
-    font-size: 0.9rem;
-}
-
-.assinatura-nota {
-    text-align: center;
-    font-style: italic;
-    font-size: 0.8rem;
-    margin-top: 10px;
-}
-
-/* Rodapé */
-.form-footer {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 0.8rem;
-    color: #666;
-}
-
-.impressao-info {
-    text-align: center;
-    margin-top: 15px;
-    font-size: 0.8rem;
-    color: #666;
-}
-
-/* Botão de impressão */
-.botao-container {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.botao-imprimir {
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-}
-
-.botao-imprimir:hover {
-    background-color: #45a049;
-}
-
-/* Mensagens de erro */
-.error-container {
-    background-color: #ffeeee;
-    border: 1px solid #ff0000;
-    border-radius: 4px;
-    padding: 10px;
-    margin-bottom: 20px;
-}
-
-.error-title {
-    color: #cc0000;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.error-list {
-    margin-left: 20px;
-    color: #cc0000;
-}
-
-.error {
-    border-color: #cc0000 !important;
-    background-color: #fff0f0 !important;
-}
-
-/* Estilos específicos para impressão */
+/* Estilos específicos para impressão e PDF */
 @media print {
+    .print-block {
+        display: block !important;
+    }
+    
     body {
         background-color: #fff;
-        font-size: 12pt;
+        font-size: 11pt;
+    }
+    
+    header, footer, .botao-container {
+        display: none !important;
+    }
+
+    .container {
+        max-width: 100%;
+        width: 100%;
         margin: 0;
         padding: 0;
     }
-    
-    .container, .form-container {
-        margin: 0;
-        padding: 10px; /* Reduzido de 20px para 10px */
-        width: 100%;
-        border: none;
+
+    .form-container {
         box-shadow: none;
+        border: none;
+        padding: 0;
     }
-    
+
     .form-section {
         page-break-inside: avoid;
-        margin-bottom: 8px; /* Reduzido de 10px para 8px */
-        border: none;
+        margin-bottom: 15px;
+        border: 1px solid #eee;
     }
-    
+
     .section-title {
-        background-color: #f0f0f0;
-        padding: 5px 10px;
-        margin-bottom: 5px;
+        background-color: #f8f8f8 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
-    
-    .form-grid, .checkbox-group, .radio-group, .termo-content, .assinaturas-container {
-        padding: 5px 10px;
-    }
-    
-    .form-group {
-        margin-bottom: 5px;
-    }
-    
-    .checkbox-item, .radio-item {
-        margin-bottom: 3px;
-    }
-    
-    .termo-list li {
-        margin-bottom: 3px;
-    }
-    
-    .botao-container, .debug-grid {
+
+    .botao-imprimir {
         display: none;
-    }
-    
-    /* Reduzir espaço vertical entre elementos */
-    .logo-center {
-        margin-bottom: 2px; /* Reduzido para 2px */
-    }
-    
-    .header {
-        margin-bottom: 3px; /* Reduzido para 3px */
-    }
-    
-    .title, .subtitle {
-        margin-bottom: 2px;
-    }
-    
-    .form-title {
-        margin: 5px 0;
-    }
-    
-    .form-intro {
-        margin-bottom: 5px;
-    }
-    
-    .form-label {
-        margin-bottom: 2px;
-    }
-    
-    /* Ajustar altura das assinaturas */
-    .assinatura-linha {
-        height: 30px;
-    }
-    
-    /* Espaçamento específico para PDF */
-    .termo-aceite {
-        margin-top: 5px;
-    }
-    
-    .assinatura-nota {
-        margin-top: 5px;
-    }
-    
-    .form-footer {
-        margin-top: 10px;
-    }
-    
-    .impressao-info {
-        margin-top: 5px;
-    }
-    
-    /* Estilos específicos para o cabeçalho compacto na impressão */
-    .header-compact {
-        margin-bottom: 5px;
-    }
-    
-    .header-compact .logo-center {
-        margin-bottom: 2px;
-    }
-    
-    .header-compact .form-title {
-        margin-top: 3px;
     }
 }

@@ -4,121 +4,148 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Requerimento - Uso de Sistemas Tributários</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" type="image/png" href="imagem_icon-removebg-preview.png">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'pv-blue-900': '#1e3a5f',
+                        'pv-blue-700': '#26476f',
+                        'pv-yellow-500': '#f2c94c',
+                        'pv-gray-100': '#f5f5f5',
+                        'pv-gray-200': '#e5e7eb',
+                        'pv-gray-500': '#6b7280',
+                        'pv-gray-700': '#374151',
+                        'pv-green-600': '#70b643',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
-<body>
-    <div class="container">
-        <div class="form-container" id="form-container">
-            <div id="error-container" class="error-container hidden">
-                <p class="error-title">Corrija os seguintes erros:</p>
-                <ul id="error-list" class="error-list"></ul>
+<body class="bg-pv-gray-100 font-poppins">
+    <!-- Novo Header SEMEC -->
+    <header class="border-b border-slate-200 bg-white">
+        <div class="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-4 lg:grid lg:grid-cols-[220px_minmax(0,1fr)_300px] lg:items-center lg:gap-8">
+            <div class="order-1 flex w-full items-center justify-center self-center lg:order-1 lg:w-auto lg:justify-start lg:self-start lg:pr-4">
+                <a href="/" aria-label="Ir para a página inicial da SEMEC Porto Velho" class="shrink-0">
+                    <img src="logo-semec.svg" alt="Logotipo da Prefeitura de Porto Velho - SEMEC" class="brasao-img object-contain w-[200px] h-[200px]">
+                </a>
             </div>
 
-            <!-- Cabeçalho mais compacto -->
-            <div class="header-compact">
-                <div class="logo-center">
-                    <img src="logo_portovelho.png" alt="Logo da Prefeitura de Porto Velho" class="brasao-img">
+            <div class="order-3 flex w-full items-center lg:order-2">
+                <div class="flex h-full w-full items-center justify-center overflow-visible">
+                    <div class="relative w-full max-w-[1280px]">
+                        <img src="PortoVelhoPintura.svg" alt="Ilustração linear destacando pontos turísticos de Porto Velho" class="h-[190px] w-full object-cover">
+                    </div>
                 </div>
-
-                <div class="title-container">
-                    <h1 class="title">PREFEITURA MUNICIPAL DE PORTO VELHO</h1>
-                    <h2 class="subtitle">SECRETARIA MUNICIPAL DE FAZENDA</h2>
-                    <h3 class="subtitle">SUBSECRETARIA DA RECEITA MUNICIPAL</h3>
-                </div>
-                
-                <h4 class="form-title">REQUERIMENTO - USO DE SISTEMAS TRIBUTÁRIOS</h4>
             </div>
 
-            <p class="form-intro">
+            <div class="order-2 flex flex-col gap-3 lg:order-3 lg:items-center">
+                <div class="flex w-full items-center justify-center gap-4 lg:w-[300px]">
+                    <div class="flex items-center gap-4">
+                        <a href="https://www.instagram.com/semec.pvh/" target="_blank" rel="noopener noreferrer" aria-label="Instagram da SEMEC" class="inline-flex h-14 w-14 items-center justify-center rounded-md border border-rose-100 bg-rose-50 text-[#E1306C] shadow-sm transition hover:border-rose-200 hover:bg-rose-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E1306C]">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                        </a>
+                        <a href="https://api.whatsapp.com/send?phone=556999425251" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp da SEMEC" class="inline-flex h-14 w-14 items-center justify-center rounded-md border border-emerald-100 bg-emerald-50 text-emerald-700 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
+                        </a>
+                        <button id="search-toggle" class="inline-flex h-14 w-14 items-center justify-center rounded-md border border-slate-200 bg-white text-slate-500 shadow-sm transition hover:bg-slate-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pv-blue-900" aria-label="Abrir busca">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="relative flex w-full flex-col lg:w-[300px] lg:items-center">
+                    <form id="site-search-form" class="hidden absolute top-[12px] left-1/2 -translate-x-1/2 z-10 w-full flex-col gap-2 lg:w-[300px]" aria-label="Barra de busca do portal">
+                        <div class="flex w-full items-center rounded-md border border-slate-200 bg-white shadow-lg focus-within:border-pv-blue-900 focus-within:ring-2 focus-within:ring-pv-blue-900/10">
+                            <label for="site-search" class="sr-only">O que você procura?</label>
+                            <span class="pl-3 text-slate-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-search"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            </span>
+                            <input id="site-search" name="search" type="search" placeholder="O que você procura?" class="w-full border-0 bg-transparent px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none">
+                            <button type="submit" class="rounded-r-md bg-pv-yellow-500 px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-yellow-400">Buscar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div aria-hidden="true" class="h-5 w-full border-b-4 border-[#FFDD00] bg-[#70B643]"></div>
+
+    <div class="container mx-auto px-4 py-8 max-w-4xl" data-search-root>
+        <div id="form-container" class="bg-white rounded-lg shadow-lg p-6 md:p-10 border border-pv-gray-200">
+            <!-- Cabeçalho Exclusivo para PDF/Impressão -->
+            <div class="hidden print-block mb-8 text-center border-b pb-4">
+                <img src="logo-semec.svg" alt="Logo SEMEC" class="h-20 mx-auto mb-2">
+                <h1 class="text-lg font-bold">PREFEITURA MUNICIPAL DE PORTO VELHO</h1>
+                <h2 class="text-md font-semibold text-pv-blue-900">SECRETARIA MUNICIPAL DE FAZENDA</h2>
+                <h3 class="text-sm font-medium text-pv-blue-700 uppercase tracking-wider">Subsecretaria da Receita Municipal</h3>
+            </div>
+
+            <div id="error-container" class="error-container hidden mb-6 p-4 bg-red-50 border border-red-200 rounded-md">
+                <p class="error-title text-red-700 font-bold mb-2">Corrija os seguintes erros:</p>
+                <ul id="error-list" class="error-list text-red-600 list-disc ml-5"></ul>
+            </div>
+
+            <h4 class="form-title text-center text-pv-green-600 font-bold text-xl md:text-2xl mb-8">REQUERIMENTO - USO DE SISTEMAS TRIBUTÁRIOS</h4>
+            
+            <p class="form-intro text-pv-gray-700 mb-6">
                 Ilmo. (a) Sr. (a) Secretário (a) Municipal de Fazenda, requeremos o acesso ao seguinte sistema:
             </p>
 
             <form id="requerimento-form">
-                <div class="form-section">
-                    <h5 class="section-title">ESCOLHER O SISTEMA</h5>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input
-                                type="checkbox"
-                                id="gpiTributario"
-                                name="sistema"
-                                value="gpiTributario"
-                                class="checkbox-input"
-                            >
-                            <label for="gpiTributario" class="checkbox-label">1. Sistema de Gestão Integrada – GPI Tributário;</label>
+                <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden">
+                    <h5 class="section-title bg-pv-gray-100 px-4 py-2 font-bold text-pv-blue-900">ESCOLHER O SISTEMA</h5>
+                    <div class="checkbox-group p-4">
+                        <div class="checkbox-item flex items-start mb-3">
+                            <input type="checkbox" id="gpiTributario" name="sistema" value="gpiTributario" class="mt-1 mr-3">
+                            <label for="gpiTributario" class="text-pv-gray-700">1. Sistema de Gestão Integrada – GPI Tributário;</label>
                         </div>
-                        <div class="checkbox-item">
-                            <input
-                                type="checkbox"
-                                id="semfazonlineNFSe"
-                                name="sistema"
-                                value="semfazonlineNFSe"
-                                class="checkbox-input"
-                            >
-                            <label for="semfazonlineNFSe" class="checkbox-label">2. Portal Semfazonline NFS-e Retenção do ISSQN.</label>
+                        <div class="checkbox-item flex items-start mb-3">
+                            <input type="checkbox" id="semfazonlineNFSe" name="sistema" value="semfazonlineNFSe" class="mt-1 mr-3">
+                            <label for="semfazonlineNFSe" class="text-pv-gray-700">2. Portal Semfazonline NFS-e Retenção do ISSQN.</label>
                         </div>
-                        <p class="checkbox-note">Marcar o sistema solicitado.</p>
+                        <p class="checkbox-note text-sm text-pv-gray-500 italic mt-2">Marcar o sistema solicitado.</p>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h5 class="section-title">DADOS DO REQUERENTE</h5>
-                    <div class="form-grid">
+                <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden">
+                    <h5 class="section-title bg-pv-gray-100 px-4 py-2 font-bold text-pv-blue-900">DADOS DO REQUERENTE</h5>
+                    <div class="form-grid grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                         <div class="form-group">
-                            <label for="nome" class="form-label">Nome:</label>
-                            <input
-                                type="text"
-                                id="nome"
-                                name="nome"
-                                class="form-input"
-                            >
+                            <label for="nome" class="form-label block font-semibold mb-1">Nome:</label>
+                            <input type="text" id="nome" name="nome" class="w-full p-2 border border-pv-gray-300 rounded focus:ring-pv-blue-900 focus:border-pv-blue-900">
                         </div>
                         <div class="form-group">
-                            <label for="cpf" class="form-label">CPF:</label>
-                            <input
-                                type="text"
-                                id="cpf"
-                                name="cpf"
-                                class="form-input"
-                                placeholder="000.000.000-00"
-                                maxlength="14"
-                            >
+                            <label for="cpf" class="form-label block font-semibold mb-1">CPF:</label>
+                            <input type="text" id="cpf" name="cpf" class="w-full p-2 border border-pv-gray-300 rounded" placeholder="000.000.000-00" maxlength="14">
                         </div>
                         <div class="form-group">
-                            <label for="cargo" class="form-label">Cargo:</label>
-                            <input
-                                type="text"
-                                id="cargo"
-                                name="cargo"
-                                class="form-input"
-                            >
+                            <label for="cargo" class="form-label block font-semibold mb-1">Cargo:</label>
+                            <input type="text" id="cargo" name="cargo" class="w-full p-2 border border-pv-gray-300 rounded">
                         </div>
                         <div class="form-group">
-                            <label for="funcao" class="form-label">Função:</label>
-                            <input
-                                type="text"
-                                id="funcao"
-                                name="funcao"
-                                class="form-input"
-                            >
+                            <label for="funcao" class="form-label block font-semibold mb-1">Função:</label>
+                            <input type="text" id="funcao" name="funcao" class="w-full p-2 border border-pv-gray-300 rounded">
                         </div>
-                        <div class="form-group full-width">
-                            <label for="lotacao" class="form-label">Lotação:</label>
-                            <input
-                                type="text"
-                                id="lotacao"
-                                name="lotacao"
-                                class="form-input"
-                            >
+                        <div class="form-group md:col-span-2">
+                            <label for="lotacao" class="form-label block font-semibold mb-1">Lotação:</label>
+                            <input type="text" id="lotacao" name="lotacao" class="w-full p-2 border border-pv-gray-300 rounded">
                         </div>
                         <div class="form-group">
-                            <label for="vinculo" class="form-label">Vínculo:</label>
-                            <select
-                                id="vinculo"
-                                name="vinculo"
-                                class="form-select"
-                            >
+                            <label for="vinculo" class="form-label block font-semibold mb-1">Vínculo:</label>
+                            <select id="vinculo" name="vinculo" class="w-full p-2 border border-pv-gray-300 rounded">
                                 <option value="">Selecione um vínculo</option>
                                 <option value="Estatutário">Estatutário</option>
                                 <option value="Comissionado">Comissionado</option>
@@ -126,85 +153,41 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="matricula" class="form-label">Matrícula:</label>
-                            <input
-                                type="text"
-                                id="matricula"
-                                name="matricula"
-                                class="form-input"
-                            >
+                            <label for="matricula" class="form-label block font-semibold mb-1">Matrícula:</label>
+                            <input type="text" id="matricula" name="matricula" class="w-full p-2 border border-pv-gray-300 rounded">
                         </div>
-                        <div class="form-group">
-                            <label for="email" class="form-label">E-mail:</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                class="form-input"
-                            >
+                        <div class="form-group md:col-span-2">
+                            <label for="email" class="form-label block font-semibold mb-1">E-mail:</label>
+                            <input type="email" id="email" name="email" class="w-full p-2 border border-pv-gray-300 rounded">
                         </div>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h5 class="section-title">MOTIVAÇÃO – Para uso do sistema</h5>
-                    <div class="radio-group">
-                        <div class="radio-item">
-                            <input
-                                type="radio"
-                                id="auditorTesouro"
-                                name="motivacao"
-                                value="auditorTesouro"
-                                class="radio-input"
-                            >
-                            <label for="auditorTesouro" class="radio-label">Auditor do Tesouro Municipal, em exercício regular das suas atribuições legais;</label>
+                <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden">
+                    <h5 class="section-title bg-pv-gray-100 px-4 py-2 font-bold text-pv-blue-900">MOTIVAÇÃO – Para uso do sistema</h5>
+                    <div class="radio-group p-4 space-y-3">
+                        <div class="radio-item flex items-start">
+                            <input type="radio" id="auditorTesouro" name="motivacao" value="auditorTesouro" class="mt-1 mr-3">
+                            <label for="auditorTesouro">Auditor do Tesouro Municipal, em exercício regular das suas atribuições legais;</label>
                         </div>
-                        <div class="radio-item">
-                            <input
-                                type="radio"
-                                id="servidorSubsecretaria"
-                                name="motivacao"
-                                value="servidorSubsecretaria"
-                                class="radio-input"
-                            >
-                            <label for="servidorSubsecretaria" class="radio-label">Servidor lotado na Subsecretaria de Receita Municipal ou na SEMFAZ;</label>
+                        <div class="radio-item flex items-start">
+                            <input type="radio" id="servidorSubsecretaria" name="motivacao" value="servidorSubsecretaria" class="mt-1 mr-3">
+                            <label for="servidorSubsecretaria">Servidor lotado na Subsecretaria de Receita Municipal ou na SEMFAZ;</label>
                         </div>
-                        <div class="radio-item">
-                            <input
-                                type="radio"
-                                id="procuradorMunicipal"
-                                name="motivacao"
-                                value="procuradorMunicipal"
-                                class="radio-input"
-                            >
-                            <label for="procuradorMunicipal" class="radio-label">Procurador Municipal, em exercício regular das suas atribuições legais;</label>
+                        <div class="radio-item flex items-start">
+                            <input type="radio" id="procuradorMunicipal" name="motivacao" value="procuradorMunicipal" class="mt-1 mr-3">
+                            <label for="procuradorMunicipal">Procurador Municipal, em exercício regular das suas atribuições legais;</label>
                         </div>
-                        <div class="radio-item">
-                            <input
-                                type="radio"
-                                id="servidorPGM"
-                                name="motivacao"
-                                value="servidorPGM"
-                                class="radio-input"
-                            >
-                            <label for="servidorPGM" class="radio-label">Servidor lotado na Procuradoria Geral do Município – PGM;</label>
+                        <div class="radio-item flex items-start">
+                            <input type="radio" id="servidorPGM" name="motivacao" value="servidorPGM" class="mt-1 mr-3">
+                            <label for="servidorPGM">Servidor lotado na Procuradoria Geral do Município – PGM;</label>
                         </div>
-                        <div class="radio-item">
-                            <input
-                                type="radio"
-                                id="outros"
-                                name="motivacao"
-                                value="outros"
-                                class="radio-input"
-                            >
-                            <label for="outros" class="radio-label">Outros (especificar):</label>
+                        <div class="radio-item flex items-start">
+                            <input type="radio" id="outros" name="motivacao" value="outros" class="mt-1 mr-3">
+                            <label for="outros">Outros (especificar):</label>
                         </div>
-                        <div id="outrosContainer" class="outros-container hidden">
-                            <select
-                                id="outrosEspecificar"
-                                name="outrosEspecificar"
-                                class="form-select"
-                            >
+                        <div id="outrosContainer" class="hidden ml-8 mt-2">
+                            <select id="outrosEspecificar" name="outrosEspecificar" class="w-full p-2 border border-pv-gray-300 rounded">
                                 <option value="">Selecione uma secretaria</option>
                                 <option value="Semusb">Semusb - Secretaria Municipal de Serviços Básicos</option>
                                 <option value="Sema">Sema - Secretaria Municipal de Meio Ambiente</option>
@@ -217,196 +200,287 @@
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h5 class="section-title">PERFIL DE ACESSO</h5>
-                    <div class="checkbox-group">
-                        <div class="checkbox-item">
-                            <input
-                                type="checkbox"
-                                id="perfilExiste"
-                                name="perfilAcesso"
-                                value="perfilExiste"
-                                class="checkbox-input"
-                            >
-                            <label for="perfilExiste" class="checkbox-label">Perfil de Acesso (Ambiente) já existe. Nome do ambiente:</label>
+                <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden">
+                    <h5 class="section-title bg-pv-gray-100 px-4 py-2 font-bold text-pv-blue-900">PERFIL DE ACESSO</h5>
+                    <div class="checkbox-group p-4 space-y-4">
+                        <div>
+                            <div class="checkbox-item flex items-start mb-2">
+                                <input type="checkbox" id="perfilExiste" name="perfilAcesso" value="perfilExiste" class="mt-1 mr-3">
+                                <label for="perfilExiste">Perfil de Acesso (Ambiente) já existe. Nome do ambiente:</label>
+                            </div>
+                            <div id="ambienteContainer" class="hidden ml-8">
+                                <select id="nomeAmbiente" name="nomeAmbiente" class="w-full p-2 border border-pv-gray-300 rounded">
+                                    <option value="">Selecione primeiro o sistema e a motivação</option>
+                                </select>
+                            </div>
                         </div>
-                        <div id="ambienteContainer" class="ambiente-container hidden">
-                            <select
-                                id="nomeAmbiente"
-                                name="nomeAmbiente"
-                                class="form-select"
-                            >
-                                <option value="">Selecione primeiro o sistema e a motivação</option>
-                            </select>
-                        </div>
-                        <div class="checkbox-item">
-                            <input
-                                type="checkbox"
-                                id="perfilNaoExiste"
-                                name="perfilAcesso"
-                                value="perfilNaoExiste"
-                                class="checkbox-input"
-                            >
-                            <label for="perfilNaoExiste" class="checkbox-label">Perfil de Acesso (Ambiente) não existe. Descrever funções do trabalho e quais módulos e dados necessita acessar:</label>
-                        </div>
-                        <div id="descricaoContainer" class="descricao-container hidden">
-                            <textarea
-                                id="descricaoFuncoes"
-                                name="descricaoFuncoes"
-                                class="form-textarea"
-                                rows="4"
-                            ></textarea>
+                        <div>
+                            <div class="checkbox-item flex items-start mb-2">
+                                <input type="checkbox" id="perfilNaoExiste" name="perfilAcesso" value="perfilNaoExiste" class="mt-1 mr-3">
+                                <label for="perfilNaoExiste">Perfil de Acesso (Ambiente) não existe. Descrever funções do trabalho e quais módulos e dados necessita acessar:</label>
+                            </div>
+                            <div id="descricaoContainer" class="hidden ml-8">
+                                <textarea id="descricaoFuncoes" name="descricaoFuncoes" class="w-full p-2 border border-pv-gray-300 rounded" rows="4"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h5 class="section-title">DATA DO REQUERIMENTO</h5>
-                    <div class="form-grid">
+                <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden">
+                    <h5 class="section-title bg-pv-gray-100 px-4 py-2 font-bold text-pv-blue-900">DATA DO REQUERIMENTO</h5>
+                    <div class="form-grid grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
                         <div class="form-group">
-                            <label for="dia" class="form-label">Dia:</label>
-                            <input
-                                type="text"
-                                id="dia"
-                                name="dia"
-                                class="form-input"
-                                maxlength="2"
-                                placeholder="DD"
-                            >
+                            <label for="dia" class="form-label block font-semibold mb-1">Dia:</label>
+                            <input type="text" id="dia" name="dia" class="w-full p-2 border border-pv-gray-300 rounded" maxlength="2" placeholder="DD">
                         </div>
                         <div class="form-group">
-                            <label for="mes" class="form-label">Mês:</label>
-                            <input
-                                type="text"
-                                id="mes"
-                                name="mes"
-                                class="form-input"
-                                maxlength="10"
-                                placeholder="mês por extenso"
-                            >
+                            <label for="mes" class="form-label block font-semibold mb-1">Mês:</label>
+                            <input type="text" id="mes" name="mes" class="w-full p-2 border border-pv-gray-300 rounded" maxlength="10" placeholder="mês por extenso">
                         </div>
                         <div class="form-group">
-                            <label for="ano" class="form-label">Ano:</label>
-                            <input
-                                type="text"
-                                id="ano"
-                                name="ano"
-                                class="form-input"
-                                maxlength="4"
-                                placeholder="AAAA"
-                            >
+                            <label for="ano" class="form-label block font-semibold mb-1">Ano:</label>
+                            <input type="text" id="ano" name="ano" class="w-full p-2 border border-pv-gray-300 rounded" maxlength="4" placeholder="AAAA">
                         </div>
                     </div>
                 </div>
 
-                <div class="form-section termo-bg">
-                    <h5 class="section-title">TERMO DE RESPONSABILIDADE</h5>
-                    <div class="termo-content">
-                        <p>Declaro estar ciente de que:</p>
-                        <ol class="termo-list">
+                <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden bg-pv-gray-100">
+                    <h5 class="section-title bg-pv-gray-200 px-4 py-2 font-bold text-pv-blue-900">TERMO DE RESPONSABILIDADE</h5>
+                    <div class="termo-content p-4">
+                        <p class="font-semibold mb-3">Declaro estar ciente de que:</p>
+                        <ol class="termo-list list-decimal ml-5 space-y-2 mb-4 text-sm">
                             <li>As informações armazenadas nos sistemas tributários da Secretaria Municipal de Fazenda de Porto Velho são sigilosas, conforme legislação vigente.</li>
                             <li>É vedado o compartilhamento das credenciais de acesso (login e senha) com terceiros, sob pena de responsabilização administrativa, civil e criminal.</li>
                             <li>O acesso aos sistemas tributários é monitorado e deve ser utilizado exclusivamente para fins profissionais legítimos.</li>
                             <li>Ao utilizar os sistemas, devo respeitar o princípio do sigilo fiscal, conforme Art. 198 do Código Tributário Nacional.</li>
                             <li>A senha é pessoal e intransferível, sendo de minha responsabilidade qualquer uso indevido.</li>
                             <li>Devo comunicar imediatamente à SEMFAZ qualquer suspeita de violação de segurança ou acesso indevido.</li>
-                             <li><a href="https://semfaz.portovelho.ro.gov.br/uploads/arquivos/2019/08/31787/1742560714anexo-ii-modelo-de-termo-de-responsabilidade.pdf" target="_blank">Ler o Termo de Responsabilidade completo</a>.</li>
+                             <li><a href="https://semfaz.portovelho.ro.gov.br/uploads/arquivos/2019/08/31787/1742560714anexo-ii-modelo-de-termo-de-responsabilidade.pdf" target="_blank" class="text-pv-blue-700 underline">Ler o Termo de Responsabilidade completo</a>.</li>
                         </ol>
 
-                        <div class="termo-aceite">
-                            <input
-                                type="checkbox"
-                                id="aceitoTermos"
-                                name="aceitoTermos"
-                                class="checkbox-input"
-                            >
-                            <label for="aceitoTermos" class="checkbox-label bold">
+                        <div class="termo-aceite flex items-start mt-4">
+                            <input type="checkbox" id="aceitoTermos" name="aceitoTermos" class="mt-1 mr-3">
+                            <label for="aceitoTermos" class="font-bold text-pv-blue-900">
                                 Declaro que li e aceito o termo de responsabilidade de uso de sistema tributário da IN 002/2024/GAB/SEMFAZ
                             </label>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h5 class="section-title">DADOS DO SUPERIOR IMEDIATO</h5>
-                    <div class="form-grid">
+                <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden">
+                    <h5 class="section-title bg-pv-gray-100 px-4 py-2 font-bold text-pv-blue-900">DADOS DO SUPERIOR IMEDIATO</h5>
+                    <div class="form-grid grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
                         <div class="form-group">
-                            <label for="superiorNome" class="form-label">Nome:</label>
-                            <input
-                                type="text"
-                                id="superiorNome"
-                                name="superiorNome"
-                                class="form-input"
-                            >
+                            <label for="superiorNome" class="form-label block font-semibold mb-1">Nome:</label>
+                            <input type="text" id="superiorNome" name="superiorNome" class="w-full p-2 border border-pv-gray-300 rounded">
                         </div>
                         <div class="form-group">
-                            <label for="superiorCPF" class="form-label">CPF:</label>
-                            <input
-                                type="text"
-                                id="superiorCPF"
-                                name="superiorCPF"
-                                class="form-input"
-                                maxlength="14"
-                                placeholder="000.000.000-00"
-                            >
+                            <label for="superiorCPF" class="form-label block font-semibold mb-1">CPF:</label>
+                            <input type="text" id="superiorCPF" name="superiorCPF" class="w-full p-2 border border-pv-gray-300 rounded" maxlength="14" placeholder="000.000.000-00">
                         </div>
                         <div class="form-group">
-                            <label for="superiorCargo" class="form-label">Cargo:</label>
-                            <input
-                                type="text"
-                                id="superiorCargo"
-                                name="superiorCargo"
-                                class="form-input"
-                            >
+                            <label for="superiorCargo" class="form-label block font-semibold mb-1">Cargo:</label>
+                            <input type="text" id="superiorCargo" name="superiorCargo" class="w-full p-2 border border-pv-gray-300 rounded">
                         </div>
                     </div>
                 </div>
 
-                <div class="form-section">
-                    <h5 class="section-title">ASSINATURAS</h5>
+                <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden">
+                    <h5 class="section-title bg-pv-gray-100 px-4 py-2 font-bold text-pv-blue-900">ASSINATURAS</h5>
 
-                    <div class="assinaturas-container">
-                        <div class="assinatura-box">
-                            <div class="assinatura-linha"></div>
-                            <p class="assinatura-label">Assinatura do Requerente</p>
+                    <div class="assinaturas-container grid grid-cols-1 md:grid-cols-2 gap-8 p-6">
+                        <div class="assinatura-box text-center">
+                            <div class="assinatura-linha border-b border-black h-20 mb-2"></div>
+                            <p class="assinatura-label text-sm">Assinatura do Requerente</p>
                         </div>
 
-                        <div class="assinatura-box">
-                            <div class="assinatura-linha"></div>
-                            <p class="assinatura-label">Assinatura do Superior Imediato</p>
+                        <div class="assinatura-box text-center">
+                            <div class="assinatura-linha border-b border-black h-20 mb-2"></div>
+                            <p class="assinatura-label text-sm">Assinatura do Superior Imediato</p>
                         </div>
                     </div>
 
-                    <p class="assinatura-nota">
-                        Este documento pode ser assinado digitalmente pelo ePMPV ou por outro meio
+                    <p class="assinatura-nota text-center text-xs text-pv-gray-500 italic pb-4 px-4">
+                        Este documento pode ser assinado digitalmente pelo GOV, SEI ou por outro meio
                     </p>
                 </div>
 
-                <div class="form-footer">
+                <div class="form-footer text-center text-xs text-pv-gray-500 space-y-1 mb-4">
                     <p>Anexo I – Requerimento de Uso de Sistema</p>
                     <p>Instrução Normativa n.º 002/2024/GAB/SEMFAZ</p>
                 </div>
 
-                <div class="impressao-info">
+                <div class="impressao-info text-center text-xs text-pv-gray-500 mb-8">
                     <p>Documento gerado eletronicamente em <span id="dataAtual"></span></p>
                 </div>
 
-                <div class="debug-grid" style="display: none;">
-                    <div class="debug-line"></div>
-                </div>
-
-                <div class="botao-container">
-                    <button
-                        type="submit"
-                        id="btnImprimir"
-                        class="botao-imprimir"
-                    >
+                <div class="botao-container text-center pb-10">
+                    <button type="submit" id="btnImprimir" class="bg-pv-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">
                         Gerar e Baixar PDF
                     </button>
                 </div>
             </form>
         </div>
     </div>
+
+    <footer class="mt-10 border-t-4 border-[#FFDD00] bg-[#70B643]">
+        <div class="mx-auto w-full max-w-5xl px-4 py-6 sm:py-8 md:py-10">
+            <!-- Header do Footer -->
+            <div class="mb-6 flex flex-col items-center gap-4 sm:mb-8 sm:flex-row sm:justify-between sm:gap-6">
+                <!-- Logos -->
+                <div class="flex items-center gap-3 sm:gap-4">
+                    <img src="Logo_Semec_Borda_Branca.png" alt="Logo oficial da SEMEC Porto Velho" class="h-auto w-[80px] drop-shadow-md sm:w-[90px] md:w-[100px]">
+                </div>
+
+                <!-- Texto da Secretaria -->
+                <div class="text-center sm:text-right">
+                    <p class="text-[0.65rem] font-medium uppercase tracking-[0.2em] text-white/90 sm:text-xs sm:tracking-[0.25em]">
+                        Secretaria Municipal de Economia
+                    </p>
+                    <p class="text-[0.6rem] font-light uppercase tracking-[0.15em] text-white/70 sm:text-[0.7rem] sm:tracking-[0.2em]">
+                        Porto Velho — Rondônia
+                    </p>
+                </div>
+            </div>
+
+            <!-- Cards Grid - Responsivo -->
+            <div class="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <!-- Card 1: Endereço -->
+                <article class="flex flex-col rounded-xl border border-white/40 bg-white/95 p-4 text-pv-blue-900 shadow-lg shadow-black/10 sm:p-5">
+                    <div class="flex items-center gap-2.5 border-b border-gray-100 pb-3 sm:gap-3 sm:pb-4">
+                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-pv-blue-900 text-white shadow-md sm:h-11 sm:w-11 sm:rounded-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-map-pin"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                        </span>
+                        <div>
+                            <p class="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-pv-blue-700 sm:text-[0.65rem] sm:tracking-[0.15em]">
+                                Endereço
+                            </p>
+                            <h3 class="text-sm font-bold leading-tight text-pv-blue-900 sm:text-base">
+                                Sede SEMEC
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 flex-1 space-y-3 sm:mt-4 sm:space-y-4">
+                        <address class="not-italic text-[0.8rem] leading-relaxed text-pv-blue-900/80 sm:text-sm">
+                            <span class="font-medium text-pv-blue-900">
+                                Av. Sete de Setembro, 744
+                            </span>
+                            <br />
+                            Bairro Centro — Porto Velho, RO
+                        </address>
+
+                        <div class="flex items-center gap-2 rounded-lg bg-pv-blue-900/5 px-2.5 py-2 sm:px-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-clock"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                            <span class="text-[0.7rem] font-semibold text-pv-blue-900 sm:text-xs">
+                                Atendimento: 08h às 14h
+                            </span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2: Contatos -->
+                <article class="flex flex-col rounded-xl border border-white/40 bg-white/95 p-4 text-pv-blue-900 shadow-lg shadow-black/10 sm:p-5">
+                    <div class="flex items-center gap-2.5 border-b border-gray-100 pb-3 sm:gap-3 sm:pb-4">
+                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-pv-blue-900 text-white shadow-md sm:h-11 sm:w-11 sm:rounded-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        </span>
+                        <div>
+                            <p class="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-pv-blue-700 sm:text-[0.65rem] sm:tracking-[0.15em]">
+                                Contatos
+                            </p>
+                            <h3 class="text-sm font-bold leading-tight text-pv-blue-900 sm:text-base">
+                                Fale Conosco
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 flex-1 space-y-2.5 sm:mt-4 sm:space-y-3">
+                        <div class="flex items-start gap-2 sm:gap-3">
+                            <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded bg-pv-blue-900/10 text-pv-blue-900 sm:h-6 sm:w-6 sm:rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            </span>
+                            <div class="min-w-0 flex-1">
+                                <p class="text-[0.55rem] font-semibold uppercase tracking-wider text-pv-blue-700 sm:text-[0.6rem]">Gabinete</p>
+                                <p class="text-[0.75rem] font-medium text-pv-blue-900 sm:text-sm">(69) 3901-6281</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-2 sm:gap-3">
+                            <span class="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded bg-pv-blue-900/10 text-pv-blue-900 sm:h-6 sm:w-6 sm:rounded-md">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                            </span>
+                            <div class="min-w-0 flex-1">
+                                <p class="text-[0.55rem] font-semibold uppercase tracking-wider text-pv-blue-700 sm:text-[0.6rem]">E-mail institucional</p>
+                                <a href="mailto:gab.semec@portovelho.ro.gov.br" class="block break-all text-[0.75rem] font-medium text-pv-blue-900 underline-offset-2 hover:underline sm:text-sm sm:break-normal sm:truncate">gab.semec@portovelho.ro.gov.br</a>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp -->
+                        <a href="https://api.whatsapp.com/send?phone=556999425251" target="_blank" rel="noopener noreferrer" class="group !mt-3 flex items-center gap-2.5 rounded-lg border border-[#70B643] bg-white p-2.5 transition hover:bg-[#70B643]/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#70B643] sm:!mt-4 sm:gap-3 sm:p-3">
+                            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 border-[#70B643] bg-white text-[#70B643] shadow-sm transition group-hover:scale-105 sm:h-10 sm:w-10">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle"><path d="m3 21 1.9-5.7a8.5 8.5 0 1 1 3.8 3.8z"/></svg>
+                            </span>
+                            <div class="min-w-0 flex-1">
+                                <p class="text-[0.55rem] font-semibold uppercase tracking-wider text-pv-blue-700 sm:text-[0.6rem]">
+                                    WhatsApp
+                                </p>
+                                <p class="text-[0.7rem] font-medium text-pv-blue-900 sm:text-xs">
+                                    (69) 9 9942-5251
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Card 3: Redes Sociais -->
+                <article class="flex flex-col rounded-xl border border-white/40 bg-white/95 p-4 text-pv-blue-900 shadow-lg shadow-black/10 sm:p-5 md:col-span-2 lg:col-span-1">
+                    <div class="flex items-center gap-2.5 border-b border-gray-100 pb-3 sm:gap-3 sm:pb-4">
+                        <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-pv-blue-900 text-white shadow-md sm:h-11 sm:w-11 sm:rounded-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                        </span>
+                        <div>
+                            <p class="text-[0.6rem] font-semibold uppercase tracking-[0.12em] text-pv-blue-700 sm:text-[0.65rem] sm:tracking-[0.15em]">
+                                Redes Sociais
+                            </p>
+                            <h3 class="text-sm font-bold leading-tight text-pv-blue-900 sm:text-base">
+                                Siga a SEMEC
+                            </h3>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 flex-1 space-y-3 sm:mt-4 sm:space-y-4">
+                        <p class="text-[0.8rem] leading-relaxed text-pv-blue-900/80 sm:text-sm">
+                            Acompanhe nossos canais oficiais e fique por dentro das novidades sobre a 
+                            <strong class="text-pv-blue-900">Reforma Tributária do Consumo</strong>.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 sm:gap-3">
+                            <a href="https://www.instagram.com/semec.pvh/" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-2 rounded-lg border border-[#F7A1C4] bg-[#FDE9F1] hover:bg-[#F9C5DA] px-3 py-2 shadow-sm transition hover:shadow-md sm:px-4 sm:py-2.5">
+                                <span class="flex h-7 w-7 items-center justify-center rounded bg-gradient-to-br from-[#f58529] via-[#dd2a7b] to-[#8134af] p-[1px] transition group-hover:scale-110 sm:h-8 sm:w-8 sm:rounded-md">
+                                    <span class="flex h-full w-full items-center justify-center rounded bg-white text-[#C13584] sm:rounded-md">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+                                    </span>
+                                </span>
+                                <span class="text-[0.8rem] font-semibold text-pv-blue-900 sm:text-sm">
+                                    @semec.pvh
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Copyright -->
+            <div class="mt-6 border-t border-white/20 pt-4 text-center sm:mt-8">
+                <p class="text-[0.6rem] text-white/60 sm:text-[0.65rem]">
+                    © 2025 Prefeitura Municipal de Porto Velho • Todos os direitos reservados
+                </p>
+            </div>
+        </div>
+
+        <!-- Banner decorativo -->
+        <div aria-hidden="true" class="h-7 w-full bg-repeat-x sm:h-9" style="background-image: url('footer-banner.png'); background-size: 328px 48px; background-position: left center;"></div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
