@@ -88,21 +88,21 @@ const PDF_STYLES = {
 
   // --- Termo ---
   termoTitle: {
-    fontSize: 9,
+    fontSize: 8.5,
     bold: true,
     color: PDF_COLORS.textDark,
-    margin: [0, 0, 0, 4],
+    margin: [0, 0, 0, 2],
   },
   termoItem: {
-    fontSize: 8,
+    fontSize: 7.5,
     color: PDF_COLORS.textDark,
-    margin: [0, 2, 0, 2],
+    margin: [0, 1, 0, 1],
   },
   termoAceite: {
-    fontSize: 9,
+    fontSize: 8.5,
     bold: true,
     color: PDF_COLORS.primaryBlue,
-    margin: [0, 6, 0, 0],
+    margin: [0, 4, 0, 0],
   },
 
   // --- Assinaturas ---

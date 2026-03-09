@@ -58,7 +58,7 @@ function createRequerimentoDoc(data) {
 
       // ---- Texto introdutório ----
       {
-        text: 'Ilmo. (a) Sr. (a) Secretário (a) Municipal de Fazenda, requeremos o acesso ao seguinte sistema:',
+        text: 'Ilmo. (a) Sr. (a) Secretário (a) Municipal de Economia, requeremos o acesso ao seguinte sistema:',
         style: 'docIntro',
         margin: [0, 0, 0, 12],
       },
@@ -68,8 +68,8 @@ function createRequerimentoDoc(data) {
       makeSectionBlock('DADOS DO REQUERENTE',       _makeDadosRequerente(data.requerente)),
       makeSectionBlock('MOTIVAÇÃO – Para uso do sistema', _makeMotivacao(data.motivacao)),
       makeSectionBlock('PERFIL DE ACESSO',          _makePerfilAcesso(data.perfilAcesso)),
-      makeSectionBlock('DATA DO REQUERIMENTO',      _makeDataRequerimento(data.dataRequerimento)),
-      makeSectionBlock('TERMO DE RESPONSABILIDADE', _makeTermo()),
+      makeSectionBlockBreakable('TERMO DE RESPONSABILIDADE', _makeTermo()),
+      { text: '', pageBreak: 'before' },
       makeSectionBlock('DADOS DO SUPERIOR IMEDIATO', _makeSuperior(data.superior)),
 
       // ---- Assinaturas ----
@@ -116,17 +116,12 @@ function _makeHeaderInstitucional() {
 // --------------------------------------------------------------------------
 function _makeSistemas(sistemas) {
   sistemas = sistemas || {};
-  return [
-    makeCheckItem('Sistema de Gestão Integrada – GPI Tributário', sistemas.gpiTributario),
-    makeCheckItem('Portal Semfazonline NFS-e Retenção do ISSQN', sistemas.semfazonlineNFSe),
-    {
-      text: 'Marcar o sistema solicitado.',
-      italics: true,
-      fontSize: 8,
-      color: PDF_COLORS.textMedium,
-      margin: [0, 4, 0, 0],
-    },
-  ];
+  const itens = [
+    { label: 'Sistema de Gestão Integrada – GPI Tributário', checked: sistemas.gpiTributario },
+    { label: 'Portal Semfazonline NFS-e Retenção do ISSQN',  checked: sistemas.semfazonlineNFSe },
+  ].filter(i => i.checked);
+
+  return itens.map(i => makeCheckItem(i.label, true));
 }
 
 // --------------------------------------------------------------------------
@@ -151,15 +146,16 @@ function _makeDadosRequerente(r) {
 // --------------------------------------------------------------------------
 function _makeMotivacao(motivacao) {
   motivacao = motivacao || {};
-  const opcoes = [
-    { id: 'auditorTesouro',         label: 'Auditor do Tesouro Municipal, em exercício regular das suas atribuições legais' },
-    { id: 'servidorSubsecretaria',  label: 'Servidor lotado na Subsecretaria de Receita Municipal ou na SEMFAZ' },
-    { id: 'procuradorMunicipal',    label: 'Procurador Municipal, em exercício regular das suas atribuições legais' },
-    { id: 'servidorPGM',            label: 'Servidor lotado na Procuradoria Geral do Município – PGM' },
-    { id: 'outros',                 label: 'Outros (especificar)' },
-  ];
+  const opcoes = {
+    auditorTesouro:        'Auditor do Tesouro Municipal, em exercício regular das suas atribuições legais',
+    servidorSubsecretaria: 'Servidor lotado na Subsecretaria de Receita Municipal ou na SEMFAZ',
+    procuradorMunicipal:   'Procurador Municipal, em exercício regular das suas atribuições legais',
+    servidorPGM:           'Servidor lotado na Procuradoria Geral do Município – PGM',
+    outros:                'Outros (especificar)',
+  };
 
-  const items = opcoes.map(op => makeCheckItem(op.label, motivacao.tipo === op.id));
+  const label = opcoes[motivacao.tipo] || '';
+  const items = [makeCheckItem(label, true)];
 
   if (motivacao.tipo === 'outros' && motivacao.outrosEspecificar) {
     items.push(makeField('Secretaria', motivacao.outrosEspecificar));
@@ -175,24 +171,25 @@ function _makePerfilAcesso(perfil) {
   perfil = perfil || {};
   const items = [];
 
-  const temExiste   = perfil.tipo === 'existe';
-  const temNaoExiste = perfil.tipo === 'naoExiste';
-
-  items.push(makeCheckItem('Perfil de Acesso (Ambiente) já existe. Nome do ambiente:', temExiste));
-  if (temExiste && perfil.nomeAmbiente) {
-    items.push(makeField('Ambiente', perfil.nomeAmbiente));
+  if (perfil.tipo === 'existe') {
+    items.push(makeCheckItem('Perfil de Acesso (Ambiente) já existe. Nome do ambiente:', true));
+    if (perfil.nomeAmbiente) {
+      items.push(makeField('Ambiente', perfil.nomeAmbiente));
+    }
   }
 
-  items.push(makeCheckItem(
-    'Perfil de Acesso (Ambiente) não existe. Descrever funções do trabalho e quais módulos e dados necessita acessar:',
-    temNaoExiste,
-  ));
-  if (temNaoExiste && perfil.descricaoFuncoes) {
-    items.push({
-      text: perfil.descricaoFuncoes,
-      style: 'fieldValue',
-      margin: [12, 2, 0, 0],
-    });
+  if (perfil.tipo === 'naoExiste') {
+    items.push(makeCheckItem(
+      'Perfil de Acesso (Ambiente) não existe. Descrever funções do trabalho e quais módulos e dados necessita acessar:',
+      true,
+    ));
+    if (perfil.descricaoFuncoes) {
+      items.push({
+        text: perfil.descricaoFuncoes,
+        style: 'fieldValue',
+        margin: [12, 2, 0, 0],
+      });
+    }
   }
 
   return items;
@@ -203,11 +200,36 @@ function _makePerfilAcesso(perfil) {
 // --------------------------------------------------------------------------
 function _makeDataRequerimento(data) {
   data = data || {};
-  return makeFieldGrid([
-    { label: 'Dia', value: data.dia },
-    { label: 'Mês', value: data.mes },
-    { label: 'Ano', value: data.ano },
-  ]);
+  const dia = data.dia || '___';
+  const mes = data.mes || '___________';
+  const ano = data.ano || '______';
+  return {
+    columns: [
+      {
+        text: [
+          { text: 'Dia: ',  style: 'fieldLabel' },
+          { text: dia,      style: 'fieldValue' },
+        ],
+        width: 'auto',
+      },
+      {
+        text: [
+          { text: 'Mês: ',  style: 'fieldLabel' },
+          { text: mes,      style: 'fieldValue' },
+        ],
+        width: 'auto',
+        margin: [24, 0, 0, 0],
+      },
+      {
+        text: [
+          { text: 'Ano: ',  style: 'fieldLabel' },
+          { text: ano,      style: 'fieldValue' },
+        ],
+        width: 'auto',
+        margin: [24, 0, 0, 0],
+      },
+    ],
+  };
 }
 
 // --------------------------------------------------------------------------
@@ -227,9 +249,8 @@ function _makeTermo() {
     { text: 'Declaro estar ciente de que:', style: 'termoTitle' },
     {
       ol: clausulas.map(t => ({ text: t, style: 'termoItem' })),
-      margin: [12, 0, 0, 6],
+      margin: [10, 0, 0, 4],
     },
-    makeDivider(4, 4),
     {
       text: '☑  Declaro que li e aceito o termo de responsabilidade de uso de sistema tributário da IN 002/2024/GAB/SEMFAZ',
       style: 'termoAceite',

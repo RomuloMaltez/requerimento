@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const descricaoContainer = document.getElementById('descricaoContainer');
     const cpfInput = document.getElementById('cpf');
     const superiorCPFInput = document.getElementById('superiorCPF');
-    const diaInput = document.getElementById('dia');
-    const anoInput = document.getElementById('ano');
     const gpiTributarioCheckbox = document.getElementById('gpiTributario');
     const semfazonlineNFSeCheckbox = document.getElementById('semfazonlineNFSe');
     const auditorTesouroRadio = document.getElementById('auditorTesouro');
@@ -189,15 +187,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('descricaoFuncoes').classList.add('error'); 
             } 
         } 
-        const dia = document.getElementById('dia').value.trim(); 
-        const mes = document.getElementById('mes').value.trim(); 
-        const ano = document.getElementById('ano').value.trim(); 
-        if (!dia || !mes || !ano) { 
-            erros.data = "Data completa é obrigatória"; 
-            if (!dia) document.getElementById('dia').classList.add('error'); 
-            if (!mes) document.getElementById('mes').classList.add('error'); 
-            if (!ano) document.getElementById('ano').classList.add('error'); 
-        } 
         if (!document.getElementById('aceitoTermos').checked) { 
             erros.termo = "Aceite do termo é obrigatório"; 
         } 
@@ -261,13 +250,6 @@ document.addEventListener('DOMContentLoaded', function() {
         this.value = formatarCPF(this.value); 
     });
 
-    diaInput.addEventListener('input', function() {
-        this.value = this.value.replace(/\D/g, '').slice(0, 2);
-    });
-
-    anoInput.addEventListener('input', function() {
-        this.value = this.value.replace(/\D/g, '').slice(0, 4);
-    });
     
     [gpiTributarioCheckbox, semfazonlineNFSeCheckbox].forEach(checkbox => { 
         checkbox.addEventListener('change', function() { 
@@ -309,11 +291,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 tipo:              perfilTipo,
                 nomeAmbiente:      nomeAmbienteSelect.options[nomeAmbienteSelect.selectedIndex]?.text || '',
                 descricaoFuncoes:  document.getElementById('descricaoFuncoes').value.trim(),
-            },
-            dataRequerimento: {
-                dia: document.getElementById('dia').value.trim(),
-                mes: document.getElementById('mes').value.trim(),
-                ano: document.getElementById('ano').value.trim(),
             },
             superior: {
                 nome:  document.getElementById('superiorNome').value.trim(),

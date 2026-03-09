@@ -8,7 +8,7 @@
  */
 
 // --------------------------------------------------------------------------
-// Bloco de seção com faixa de título colorida e corpo
+// Bloco de seção com faixa de título colorida e corpo (sem quebra de página)
 // --------------------------------------------------------------------------
 function makeSectionBlock(title, bodyContent) {
   return {
@@ -32,6 +32,40 @@ function makeSectionBlock(title, bodyContent) {
           borderColor: [PDF_COLORS.borderLight, PDF_COLORS.borderLight, PDF_COLORS.borderLight, PDF_COLORS.borderLight],
         }],
       ],
+    },
+    layout: {
+      hLineColor: () => PDF_COLORS.borderLight,
+      vLineColor: () => PDF_COLORS.borderLight,
+    },
+  };
+}
+
+// --------------------------------------------------------------------------
+// Bloco de seção que permite quebra de página (para conteúdo longo)
+// --------------------------------------------------------------------------
+function makeSectionBlockBreakable(title, bodyContent) {
+  const items = Array.isArray(bodyContent) ? bodyContent : [bodyContent];
+  return {
+    margin: [0, 0, 0, 10],
+    table: {
+      widths: ['*'],
+      body: [
+        // Linha de título
+        [{
+          text: title,
+          style: 'sectionTitle',
+          fillColor: PDF_COLORS.primaryBlue,
+          border: [true, true, true, false],
+          margin: [8, 5, 8, 5],
+        }],
+        // Corpo — célula com dontBreakRows: false permite quebra de página
+        [{
+          stack: items,
+          border: [true, false, true, true],
+          margin: [8, 6, 8, 8],
+        }],
+      ],
+      dontBreakRows: false,
     },
     layout: {
       hLineColor: () => PDF_COLORS.borderLight,
@@ -107,37 +141,33 @@ function makeDivider(marginTop = 6, marginBottom = 6) {
 // Bloco de assinaturas (duas colunas)
 // --------------------------------------------------------------------------
 function makeSignatureBlock() {
-  const line = {
-    canvas: [{
-      type: 'line',
-      x1: 0, y1: 0,
-      x2: 200, y2: 0,
-      lineWidth: 0.8,
-      lineColor: PDF_COLORS.textDark,
-    }],
-    margin: [0, 40, 0, 4],
-  };
+  const assinaturaCol = (label) => ({
+    stack: [
+      // Espaço para assinatura manuscrita
+      { text: '', margin: [0, 28, 0, 0] },
+      // Linha de assinatura centralizada
+      {
+        canvas: [{
+          type: 'line',
+          x1: 10, y1: 0,
+          x2: 210, y2: 0,
+          lineWidth: 0.8,
+          lineColor: PDF_COLORS.textDark,
+        }],
+        margin: [0, 0, 0, 3],
+      },
+      { text: label, style: 'signatureLabel', alignment: 'center' },
+    ],
+    width: '50%',
+  });
 
   return {
     columns: [
-      {
-        stack: [
-          line,
-          { text: 'Assinatura do Requerente', style: 'signatureLabel' },
-        ],
-        width: '50%',
-        alignment: 'center',
-      },
-      {
-        stack: [
-          line,
-          { text: 'Assinatura do Superior Imediato', style: 'signatureLabel' },
-        ],
-        width: '50%',
-        alignment: 'center',
-      },
+      assinaturaCol('Assinatura do Requerente'),
+      assinaturaCol('Assinatura do Superior Imediato'),
     ],
-    margin: [0, 8, 0, 4],
+    columnGap: 20,
+    margin: [0, 6, 0, 4],
   };
 }
 
@@ -183,6 +213,7 @@ function makeDocFooter(currentPage, pageCount, dataCriacao) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     makeSectionBlock,
+    makeSectionBlockBreakable,
     makeField,
     makeFieldGrid,
     makeCheckItem,
@@ -191,11 +222,12 @@ if (typeof module !== 'undefined' && module.exports) {
     makeDocFooter,
   };
 } else {
-  window.makeSectionBlock  = makeSectionBlock;
-  window.makeField         = makeField;
-  window.makeFieldGrid     = makeFieldGrid;
-  window.makeCheckItem     = makeCheckItem;
-  window.makeDivider       = makeDivider;
-  window.makeSignatureBlock = makeSignatureBlock;
-  window.makeDocFooter     = makeDocFooter;
+  window.makeSectionBlock           = makeSectionBlock;
+  window.makeSectionBlockBreakable  = makeSectionBlockBreakable;
+  window.makeField                  = makeField;
+  window.makeFieldGrid              = makeFieldGrid;
+  window.makeCheckItem              = makeCheckItem;
+  window.makeDivider                = makeDivider;
+  window.makeSignatureBlock         = makeSignatureBlock;
+  window.makeDocFooter              = makeDocFooter;
 }
