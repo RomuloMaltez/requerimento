@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const descricaoContainer = document.getElementById('descricaoContainer');
     const cpfInput = document.getElementById('cpf');
     const superiorCPFInput = document.getElementById('superiorCPF');
-    const diaInput = document.getElementById('dia');
-    const anoInput = document.getElementById('ano');
     const gpiTributarioCheckbox = document.getElementById('gpiTributario');
     const semfazonlineNFSeCheckbox = document.getElementById('semfazonlineNFSe');
     const auditorTesouroRadio = document.getElementById('auditorTesouro');
@@ -189,15 +187,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('descricaoFuncoes').classList.add('error'); 
             } 
         } 
-        const dia = document.getElementById('dia').value.trim(); 
-        const mes = document.getElementById('mes').value.trim(); 
-        const ano = document.getElementById('ano').value.trim(); 
-        if (!dia || !mes || !ano) { 
-            erros.data = "Data completa é obrigatória"; 
-            if (!dia) document.getElementById('dia').classList.add('error'); 
-            if (!mes) document.getElementById('mes').classList.add('error'); 
-            if (!ano) document.getElementById('ano').classList.add('error'); 
-        } 
         if (!document.getElementById('aceitoTermos').checked) { 
             erros.termo = "Aceite do termo é obrigatório"; 
         } 
@@ -261,13 +250,6 @@ document.addEventListener('DOMContentLoaded', function() {
         this.value = formatarCPF(this.value); 
     });
 
-    diaInput.addEventListener('input', function() {
-        this.value = this.value.replace(/\D/g, '').slice(0, 2);
-    });
-
-    anoInput.addEventListener('input', function() {
-        this.value = this.value.replace(/\D/g, '').slice(0, 4);
-    });
     
     [gpiTributarioCheckbox, semfazonlineNFSeCheckbox].forEach(checkbox => { 
         checkbox.addEventListener('change', function() { 
@@ -277,154 +259,57 @@ document.addEventListener('DOMContentLoaded', function() {
         }); 
     });
 
-    // Função otimizada para geração do PDF
-    async function processImageAndGeneratePdf() {
-        const originalSrc = logoImage ? logoImage.src : null;
-        let needsRestoration = false;
+    // Coleta todos os dados preenchidos no formulário e retorna o objeto esperado por createRequerimentoDoc
+    function coletarDadosFormulario() {
+        const motivacaoEl = document.querySelector('input[name="motivacao"]:checked');
+        const motivacaoTipo = motivacaoEl ? motivacaoEl.value : '';
 
-        // Processamento da imagem para o PDF
-        if (logoImage && logoImage.src && !logoImage.src.startsWith('data:')) {
-            console.log("Tentando pré-converter a imagem do logo para Data URL...");
-            try {
-                const dataUrl = await new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.crossOrigin = 'Anonymous';
-                    img.onload = () => {
-                        console.log("Imagem carregada para pré-conversão.");
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.naturalWidth;
-                        canvas.height = img.naturalHeight;
-                        const ctx = canvas.getContext('2d');
-                        try {
-                            ctx.drawImage(img, 0, 0);
-                            const dataURL = canvas.toDataURL('image/png');
-                            resolve(dataURL);
-                        } catch (e) {
-                            console.error('Falha ao executar toDataURL na pré-conversão (Tainted Canvas):', e);
-                            reject(e);
-                        }
-                    };
-                    img.onerror = (e) => {
-                        console.error('Erro ao carregar a imagem original para pré-conversão em Data URL:', e);
-                        reject(new Error('Falha ao carregar a imagem do logo.'));
-                    };
-                    img.src = logoImage.src;
-                });
-                if (dataUrl) {
-                    logoImage.src = dataUrl;
-                    needsRestoration = true;
-                    console.log("Imagem do logo substituída por Data URL para o PDF.");
-                }
-            } catch (error) {
-                console.error('A pré-conversão da imagem do logo para Data URL falhou:', error);
-                alert('Aviso: Não foi possível processar a imagem do logo. O PDF será gerado, mas o logo pode não aparecer corretamente. Verifique o console (F12).');
-            }
-        }
+        let perfilTipo = '';
+        if (perfilExisteCheckbox.checked)    perfilTipo = 'existe';
+        if (perfilNaoExisteCheckbox.checked) perfilTipo = 'naoExiste';
 
-        const botaoContainerOriginal = document.querySelector('.botao-container');
-        if (botaoContainerOriginal) botaoContainerOriginal.style.display = 'none';
-
-        // --- MELHORIA: Substituir textarea por DIV para evitar que o texto saia "quebrado" ou cortado no PDF ---
-        const textareas = formContainer.querySelectorAll('textarea');
-        const replacements = [];
-        
-        textareas.forEach(textarea => {
-            // Criar um elemento div para substituir o textarea na renderização do PDF
-            const div = document.createElement('div');
-            // Preservar as quebras de linha substituindo \n por <br> ou usando whitespace-pre-wrap
-            div.textContent = textarea.value;
-            
-            // Copiar estilos e classes do textarea para a div
-            div.className = textarea.className + ' whitespace-pre-wrap break-all min-h-[100px] bg-white';
-            
-            // Estilos adicionais para garantir que se pareça com o textarea original mas expanda conforme o conteúdo
-            div.style.border = getComputedStyle(textarea).border;
-            div.style.padding = getComputedStyle(textarea).padding;
-            div.style.borderRadius = getComputedStyle(textarea).borderRadius;
-            div.style.fontSize = getComputedStyle(textarea).fontSize;
-            div.style.fontFamily = getComputedStyle(textarea).fontFamily;
-            div.style.lineHeight = getComputedStyle(textarea).lineHeight;
-            div.style.width = '100%';
-            div.style.display = 'block';
-            div.style.overflowWrap = 'break-word';
-            div.style.wordBreak = 'break-all'; // Crucial para palavras muito longas sem espaços
-            
-            // Inserir a div antes do textarea e esconder o textarea
-            textarea.parentNode.insertBefore(div, textarea);
-            textarea.style.display = 'none';
-            
-            replacements.push({ textarea, div });
-        });
-
-        // Aplicar estilos temporários para compactar o conteúdo
-        const originalPadding = formContainer.style.padding;
-        formContainer.style.padding = '10px';
-        
-        // Reduzir temporariamente o tamanho do logo para o PDF
-        const originalMaxWidth = logoImage ? logoImage.style.maxWidth : '';
-        if (logoImage) {
-            logoImage.style.maxWidth = '70px';
-        }
-
-        // Configurações otimizadas para o PDF
-        const opt = {
-            margin: [10, 10, 10, 10], // Margens reduzidas [topo, esquerda, baixo, direita]
-            filename: 'requerimento_sistemas_tributarios.pdf',
-            image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: {
-                scale: 2,
-                logging: true,
-                useCORS: true,
-                scrollX: 0,
-                scrollY: 0,
-                removeContainer: true,
-                ignoreElements: (element) => {
-                    return element.id === 'error-container' && !element.classList.contains('hidden');
-                }
+        return {
+            sistemas: {
+                gpiTributario:    gpiTributarioCheckbox.checked,
+                semfazonlineNFSe: semfazonlineNFSeCheckbox.checked,
             },
-            jsPDF: {
-                unit: 'mm',
-                format: 'a4',
-                orientation: 'portrait',
-                compress: true // Ativar compressão
+            requerente: {
+                nome:      document.getElementById('nome').value.trim(),
+                cpf:       document.getElementById('cpf').value.trim(),
+                cargo:     document.getElementById('cargo').value.trim(),
+                funcao:    document.getElementById('funcao').value.trim(),
+                lotacao:   document.getElementById('lotacao').value.trim(),
+                vinculo:   document.getElementById('vinculo').value,
+                matricula: document.getElementById('matricula').value.trim(),
+                email:     document.getElementById('email').value.trim(),
             },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] },
-            enableLinks: true
+            motivacao: {
+                tipo:               motivacaoTipo,
+                outrosEspecificar:  outrosEspecificarSelect.options[outrosEspecificarSelect.selectedIndex]?.text || '',
+            },
+            perfilAcesso: {
+                tipo:              perfilTipo,
+                nomeAmbiente:      nomeAmbienteSelect.options[nomeAmbienteSelect.selectedIndex]?.text || '',
+                descricaoFuncoes:  document.getElementById('descricaoFuncoes').value.trim(),
+            },
+            superior: {
+                nome:  document.getElementById('superiorNome').value.trim(),
+                cpf:   document.getElementById('superiorCPF').value.trim(),
+                cargo: document.getElementById('superiorCargo').value.trim(),
+            },
+            dataCriacao: new Date().toLocaleDateString('pt-BR'),
         };
+    }
 
-        console.log("Iniciando a geração do PDF com configurações otimizadas...");
-        try {
-            await html2pdf().from(formContainer).set(opt).save();
-            console.log("PDF gerado e download iniciado.");
-        } catch (err) {
-            console.error("Erro detalhado durante a execução de html2pdf().save():", err);
-            alert("Ocorreu um erro ao gerar o PDF. Por favor, verifique o console do navegador (F12) para mais detalhes técnicos e tente novamente.");
-            throw err;
-        } finally {
-            // --- RESTAURAÇÃO: Voltar os textareas ao normal ---
-            replacements.forEach(({ textarea, div }) => {
-                textarea.style.display = '';
-                div.remove();
-            });
-
-            // Restaurar estilos originais
-            formContainer.style.padding = originalPadding;
-            if (logoImage) {
-                logoImage.style.maxWidth = originalMaxWidth;
-            }
-            
-            btnImprimir.disabled = false;
-            btnImprimir.textContent = 'Gerar e Baixar PDF';
-            if (botaoContainerOriginal) botaoContainerOriginal.style.display = 'block';
-            if (needsRestoration && logoImage && originalSrc) {
-                logoImage.src = originalSrc;
-                console.log("Imagem do logo restaurada para o src original.");
-            }
-        }
+    // Geração do PDF via pdfmake (sem screenshot — documento programático)
+    function gerarPDF() {
+        const data = coletarDadosFormulario();
+        const docDefinition = createRequerimentoDoc(data);
+        pdfMake.createPdf(docDefinition).download('requerimento_sistemas_tributarios.pdf');
     }
 
     // Listener para o evento de submissão do formulário
-    form.addEventListener('submit', async function(e) {
+    form.addEventListener('submit', function(e) {
         e.preventDefault();
         resetarErros();
         const erros = validarFormulario();
@@ -435,9 +320,13 @@ document.addEventListener('DOMContentLoaded', function() {
         btnImprimir.disabled = true;
         btnImprimir.textContent = 'Gerando PDF...';
         try {
-            await processImageAndGeneratePdf();
+            gerarPDF();
         } catch (error) {
-            console.log("Tratamento final de erro no listener de submit após falha em processImageAndGeneratePdf.");
+            console.error('Erro ao gerar PDF:', error);
+            alert('Ocorreu um erro ao gerar o PDF. Verifique o console (F12) para detalhes.');
+        } finally {
+            btnImprimir.disabled = false;
+            btnImprimir.textContent = 'Gerar e Baixar PDF';
         }
     });
 

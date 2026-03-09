@@ -31,7 +31,11 @@
         }
     </script>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="pdf/pdf-styles.js"></script>
+    <script src="pdf/pdf-utils.js"></script>
+    <script src="pdf/pdf-template.js"></script>
 </head>
 <body class="bg-pv-gray-100 font-poppins">
     <!-- Novo Header SEMEC -->
@@ -226,23 +230,6 @@
                     </div>
                 </div>
 
-                <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden">
-                    <h5 class="section-title bg-pv-gray-100 px-4 py-2 font-bold text-pv-blue-900">DATA DO REQUERIMENTO</h5>
-                    <div class="form-grid grid grid-cols-1 md:grid-cols-3 gap-4 p-4">
-                        <div class="form-group">
-                            <label for="dia" class="form-label block font-semibold mb-1">Dia:</label>
-                            <input type="text" id="dia" name="dia" class="w-full p-2 border border-pv-gray-300 rounded" maxlength="2" placeholder="DD">
-                        </div>
-                        <div class="form-group">
-                            <label for="mes" class="form-label block font-semibold mb-1">Mês:</label>
-                            <input type="text" id="mes" name="mes" class="w-full p-2 border border-pv-gray-300 rounded" maxlength="10" placeholder="mês por extenso">
-                        </div>
-                        <div class="form-group">
-                            <label for="ano" class="form-label block font-semibold mb-1">Ano:</label>
-                            <input type="text" id="ano" name="ano" class="w-full p-2 border border-pv-gray-300 rounded" maxlength="4" placeholder="AAAA">
-                        </div>
-                    </div>
-                </div>
 
                 <div class="form-section mb-8 border border-pv-gray-200 rounded-lg overflow-hidden bg-pv-gray-100">
                     <h5 class="section-title bg-pv-gray-200 px-4 py-2 font-bold text-pv-blue-900">TERMO DE RESPONSABILIDADE</h5>
