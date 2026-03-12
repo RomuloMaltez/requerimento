@@ -50,7 +50,7 @@ const formSchema = z.object({
     motivacao: z.string().min(1, "Selecione uma motivação."), // Exige que o rádio seja marcado
     outrosEspecificar: z.string().optional(),
     tipoPerfil: z.enum(["existe", "naoExiste", ""], {
-        errorMap: () => ({ message: "Selecione uma opção de perfil de acesso." })
+        message: "Selecione uma opção de perfil de acesso."
     }).refine(val => val !== "", { message: "Selecione uma opção de perfil de acesso." }),
     nomeAmbiente: z.string().optional(),
     descricaoFuncoes: z.string().optional(),
