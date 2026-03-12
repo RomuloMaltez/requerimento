@@ -58,7 +58,7 @@ function createRequerimentoDoc(data) {
 
       // ---- Texto introdutório ----
       {
-        text: 'Ilmo. (a) Sr. (a) Secretário (a) Municipal de Economia, requeremos o acesso ao seguinte sistema:',
+        text: 'Ilmo. (a) Sr. (a) Secretário (a) Municipal de Fazenda, requeremos o acesso ao seguinte sistema:',
         style: 'docIntro',
         margin: [0, 0, 0, 12],
       },
@@ -89,21 +89,22 @@ function createRequerimentoDoc(data) {
 // --------------------------------------------------------------------------
 function _makeHeaderInstitucional() {
   return {
-    margin: [0, 0, 0, 8],
+    margin: [0, 0, 0, 10],
     table: {
       widths: ['*'],
       body: [[{
         stack: [
           { text: 'PREFEITURA MUNICIPAL DE PORTO VELHO', style: 'headerTitle' },
-          { text: 'SECRETARIA MUNICIPAL DE ECONOMIA', style: 'headerSubtitle' },
+          { text: 'SECRETARIA MUNICIPAL DE FAZENDA', style: 'headerSubtitle' },
         ],
-        fillColor: PDF_COLORS.backgroundSection,
+        fillColor: PDF_COLORS.white,
         border: [false, false, false, true],
         borderColor: [null, null, null, PDF_COLORS.accentGreen],
-        margin: [0, 10, 0, 10],
+        margin: [0, 8, 0, 8],
       }]],
     },
     layout: {
+      hLineWidth: (i, node) => (i === node.table.body.length ? 2 : 0),
       hLineColor: () => PDF_COLORS.accentGreen,
       vLineColor: () => 'transparent',
     },

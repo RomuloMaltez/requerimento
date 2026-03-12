@@ -1,171 +1,116 @@
 import React, { CSSProperties } from "react";
 
-// --- ESTILOS FORNECIDOS ---
-const pdfPageStyle: CSSProperties = {
-    width: "190mm",
-    minHeight: "277mm",
-    padding: "10mm",
-    background: "#ffffff",
-    fontFamily: "Arial, sans-serif",
-    fontSize: "10.5pt",
-    lineHeight: 1.4,
-    color: "#000000",
-};
+// ── Paleta de cores (alinhada com o padrão institucional) ─────────────────────
+const NAVY    = "#1e3a5f";
+const GREEN   = "#70b643";
+const DK_GRN  = "#2D5016";
+const GRAY    = "#6b7280";
+const BORDER  = "#e5e7eb";
 
-const pdfHeaderStyle: CSSProperties = {
-    textAlign: "center",
-    marginBottom: "18px",
-    borderBottom: "2px solid #333",
-    paddingBottom: "12px",
+// ── Estilos base ──────────────────────────────────────────────────────────────
+const pdfPaperStyle: CSSProperties = {
+    position: "relative",
+    width: "210mm",
+    height: "297mm",
+    background: "#ffffff",
+    overflow: "hidden",
+    boxSizing: "border-box",
 };
 
 const pdfTitleStyle: CSSProperties = {
-    fontSize: "17pt",
-    marginBottom: "6px",
-    margin: "20px 0 20px 0",
-    color: "#000",
-    fontWeight: 700,
-    textAlign: "center"
-};
-
-const pdfSubTitleStyle: CSSProperties = {
     fontSize: "13pt",
-    marginBottom: "4px",
-    fontWeight: 400,
-    color: "#333",
-};
-
-const pdfHeaderTextStyle: CSSProperties = {
-    fontSize: "9pt",
-    color: "#666",
+    margin: "6px 0 10px 0",
+    color: GREEN,
+    fontWeight: 700,
+    textAlign: "center",
+    textTransform: "uppercase",
 };
 
 const pdfSectionTitleStyle: CSSProperties = {
-    background: "#333",
+    background: NAVY,
     color: "#fff",
-    padding: "0 0 15px 5px",
-    margin: "28px 0 2px 0", 
-    fontSize: "11pt",
+    padding: "5px 8px",
+    margin: "12px 0 2px 0",
+    fontSize: "10pt",
     fontWeight: 700,
 };
 
 const pdfFieldLineStyle: CSSProperties = {
-    marginBottom: "6px",
+    marginBottom: "5px",
     lineHeight: 1.6,
-};
-
-const pdfParagraphStyle: CSSProperties = {
-    marginBottom: "10px",
-    textAlign: "justify",
-};
-
-const pdfCheckboxLineStyle: CSSProperties = {
-    margin: "6px 0",
-    padding: "4px",
-    border: "1px solid #ddd",
-};
-
-const pdfTableStyle: CSSProperties = {
-    width: "100%",
-    borderCollapse: "collapse",
-    margin: "12px 0",
-};
-
-const pdfCellStyle: CSSProperties = {
-    border: "1px solid #333",
-    padding: "6px",
-    textAlign: "left",
     fontSize: "9.5pt",
 };
 
-const pdfThStyle: CSSProperties = {
-    ...pdfCellStyle,
-    background: "#f0f0f0",
-    fontWeight: 700,
+const pdfParagraphStyle: CSSProperties = {
+    marginBottom: "8px",
+    textAlign: "justify",
+    fontSize: "9.5pt",
 };
 
-const pdfSignatureAreaStyle: CSSProperties = {
-    marginTop: "35px",
-    textAlign: "center",
-};
-
-const pdfSignatureLineStyle: CSSProperties = {
-    borderTop: "1px solid #000",
-    width: "300px",
-    margin: "45px auto 8px",
-};
-
-const pdfHrStyle: CSSProperties = {
-    border: "none",
-    borderTop: "1px solid #333",
-    margin: "15px 0",
-};
-
-const pdfPaperStyle: CSSProperties = {
-    position: "relative",
-    width: "210mm",
-    minHeight: "297mm",
-    height: "297mm",
-    background: "#ffffff",
-    overflow: "hidden",
-};
-
-const pdfTimbradoHeaderStyle: CSSProperties = {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    width: "100%",
-    pointerEvents: "none",
-    zIndex: 1,
-};
-
-const pdfTimbradoHeaderImgStyle: CSSProperties = {
-    width: "100%",
-    display: "block",
-};
-
-const pdfTimbradoFooterStyle: CSSProperties = {
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    width: "100%",
-    pointerEvents: "none",
-    zIndex: 1,
-};
-
-const pdfTimbradoFooterImgStyle: CSSProperties = {
-    width: "100%",
-    display: "block",
-};
-
-const pdfContentLayerStyle: CSSProperties = {
-    position: "relative",
-    zIndex: 2,
-    width: "190mm",
-    minHeight: "277mm",
-    padding: "25mm 10mm 28mm 10mm",
-    margin: "0 auto",
-    background: "transparent",
-    fontFamily: "Arial, sans-serif",
-    fontSize: "10.5pt",
-    lineHeight: 1.4,
-    color: "#000000",
-};
-
-const TIMBRADO_HEADER_SRC = "/semec-timbrado-cabecalho.png"; // Certifique-se que as imagens estão na pasta public
-const TIMBRADO_FOOTER_SRC = "/semec-timbrado-rodape.png";
-
+// ── Quadro de página (cabeçalho + conteúdo + rodapé) ─────────────────────────
 export function PdfPageFrame({ children }: { children: React.ReactNode }) {
+    const dataHoje = new Date().toLocaleDateString("pt-BR");
+
     return (
         <div className="pdf-page" style={pdfPaperStyle}>
-            <div style={pdfTimbradoHeaderStyle}><img src={TIMBRADO_HEADER_SRC} alt="" style={pdfTimbradoHeaderImgStyle} /></div>
-            <div style={pdfTimbradoFooterStyle}><img src={TIMBRADO_FOOTER_SRC} alt="" style={pdfTimbradoFooterImgStyle} /></div>
-            <div style={pdfContentLayerStyle}>{children}</div>
+            <div style={{
+                height: "100%",
+                padding: "10mm 20mm 8mm 20mm",
+                boxSizing: "border-box",
+                display: "flex",
+                flexDirection: "column",
+                fontFamily: "Arial, sans-serif",
+                fontSize: "10.5pt",
+                lineHeight: 1.4,
+                color: "#000000",
+            }}>
+
+                {/* ── Cabeçalho institucional ─────────────────────────────── */}
+                <div style={{
+                    textAlign: "center",
+                    borderBottom: `2px solid ${GREEN}`,
+                    paddingBottom: "6px",
+                    marginBottom: "10px",
+                }}>
+                    <div style={{ fontSize: "13pt", fontWeight: "bold", color: NAVY }}>
+                        PREFEITURA MUNICIPAL DE PORTO VELHO
+                    </div>
+                    <div style={{ fontSize: "10pt", color: DK_GRN }}>
+                        SECRETARIA MUNICIPAL DE FAZENDA
+                    </div>
+                </div>
+
+                {/* ── Conteúdo da página ──────────────────────────────────── */}
+                <div style={{ flex: 1, overflow: "hidden" }}>
+                    {children}
+                </div>
+
+                {/* ── Rodapé de página ────────────────────────────────────── */}
+                <div style={{
+                    borderTop: `1px solid ${BORDER}`,
+                    paddingTop: "4px",
+                    marginTop: "6px",
+                }}>
+                    <div style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        fontSize: "7pt",
+                        color: GRAY,
+                    }}>
+                        <span>Anexo I – Requerimento de Uso de Sistema</span>
+                        <span>Instrução Normativa n.º 002/2024/GAB/SEMFAZ</span>
+                    </div>
+                    <div style={{ textAlign: "center", fontSize: "7pt", color: GRAY, marginTop: "2px" }}>
+                        Documento gerado eletronicamente em {dataHoje}
+                    </div>
+                </div>
+
+            </div>
         </div>
     );
 }
 
-// Props que o PDF vai receber
+// ── Props ─────────────────────────────────────────────────────────────────────
 type PdfProps = {
     sistemas: string[];
     requerente: any;
@@ -175,121 +120,204 @@ type PdfProps = {
     dataRequerimento: string;
 };
 
-// Componente Principal do PDF
-export const RequerimentoPDF = React.forwardRef<HTMLDivElement, PdfProps>(({ sistemas, requerente, motivacao, perfil, superior, dataRequerimento }, ref) => {
+// ── Componente principal ──────────────────────────────────────────────────────
+export const RequerimentoPDF = React.forwardRef<HTMLDivElement, PdfProps>(
+    ({ sistemas, requerente, motivacao, perfil, superior, dataRequerimento }, ref) => {
 
-    // Mapeamentos para deixar os textos legíveis no PDF
-    const sistemasMap: Record<string, string> = {
-        gpiTributario: "Sistema de Gestão Integrada – GPI Tributário",
-        semfazonlineNFSe: "Portal Semfazonline NFS-e Retenção do ISSQN"
-    };
+        const sistemasMap: Record<string, string> = {
+            gpiTributario:    "Sistema de Gestão Integrada – GPI Tributário",
+            semfazonlineNFSe: "Portal Semfazonline NFS-e Retenção do ISSQN",
+        };
 
-    const motivacaoMap: Record<string, string> = {
-        auditorTesouro: "Auditor do Tesouro Municipal",
-        servidorSubsecretaria: "Servidor lotado na Subsecretaria de Receita Municipal ou na SEMFAZ",
-        procuradorMunicipal: "Procurador Municipal",
-        servidorPGM: "Servidor lotado na PGM",
-        outros: `Outros: ${motivacao.outrosEspecificar}`
-    };
+        const motivacaoMap: Record<string, string> = {
+            auditorTesouro:        "Auditor do Tesouro Municipal",
+            servidorSubsecretaria: "Servidor lotado na Subsecretaria de Receita Municipal ou na SEMFAZ",
+            procuradorMunicipal:   "Procurador Municipal",
+            servidorPGM:           "Servidor lotado na PGM",
+            outros:                `Outros: ${motivacao.outrosEspecificar}`,
+        };
 
-    // Formatar a data (DD/MM/YYYY) baseada no horário atual do sistema para o rodapé
-    const dataAtual = new Date().toLocaleDateString("pt-BR");
+        const formatarDataFormal = (data: string) => {
+            if (!data) return "";
+            const [ano, mesStr, dia] = data.split("-");
+            const meses = [
+                "janeiro", "fevereiro", "março", "abril", "maio", "junho",
+                "julho", "agosto", "setembro", "outubro", "novembro", "dezembro",
+            ];
+            return `Porto Velho - RO, ${parseInt(dia, 10)} de ${meses[parseInt(mesStr, 10) - 1]} de ${ano}.`;
+        };
 
-    // Formatar a data do requerimento para o padrão formal (Ex: Porto Velho - RO, 05 de março de 2026)
-    const formatarDataFormal = (data: string) => {
-        if (!data) return "";
-        const [ano, mesStr, dia] = data.split('-');
-        const meses = [
-            "janeiro", "fevereiro", "março", "abril", "maio", "junho",
-            "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"
-        ];
-        const mesIndex = parseInt(mesStr, 10) - 1;
-        const dia2 = parseInt(dia, 10);
-        return `Porto Velho - RO, ${dia2} de ${meses[mesIndex]} de ${ano}.`;
-    };
+        const dataFormal = formatarDataFormal(dataRequerimento);
 
-    const dataFormal = formatarDataFormal(dataRequerimento);
+        return (
+            <div ref={ref} style={{ position: "absolute", top: "-9999px", left: "-9999px" }}>
 
-    return (
-        <div ref={ref} style={{ position: "absolute", top: "-9999px", left: "-9999px" }}>
+                {/* ════════════════════ PÁGINA 1 ════════════════════ */}
+                <PdfPageFrame>
+                    <h1 style={pdfTitleStyle}>REQUERIMENTO – USO DE SISTEMAS TRIBUTÁRIOS</h1>
 
-            {/* --- PÁGINA 1 --- */}
-            <PdfPageFrame>
-                <h1 style={pdfTitleStyle}>REQUERIMENTO - USO DE SISTEMAS TRIBUTÁRIOS</h1>
+                    <p style={pdfParagraphStyle}>
+                        <strong>
+                            Ilmo. (a) Sr. (a) Secretário (a) Municipal de Fazenda, requeremos o acesso
+                            ao seguinte sistema:
+                        </strong>
+                    </p>
 
-                <p style={pdfParagraphStyle}>
-                    <strong>Ilmo. (a) Sr. (a) Secretário (a) Municipal de Fazenda, requeremos o acesso ao seguinte sistema:</strong>
-                </p>
-
-                <div style={pdfSectionTitleStyle}>SISTEMA SOLICITADO</div>
-                {sistemas.map(s => (
-                    <div key={s} style={pdfFieldLineStyle}>• {sistemasMap[s] || s}</div>
-                ))}
-
-                <div style={pdfSectionTitleStyle}>DADOS DO REQUERENTE</div>
-                <div style={pdfFieldLineStyle}><strong>Nome:</strong> {requerente.nome}</div>
-                <div style={pdfFieldLineStyle}><strong>CPF:</strong> {requerente.cpf}</div>
-                <div style={pdfFieldLineStyle}><strong>Cargo:</strong> {requerente.cargo}</div>
-                <div style={pdfFieldLineStyle}><strong>Função:</strong> {requerente.funcao || "N/A"}</div>
-                <div style={pdfFieldLineStyle}><strong>Lotação:</strong> {requerente.lotacao}</div>
-                <div style={pdfFieldLineStyle}><strong>Vínculo:</strong> {requerente.vinculo}</div>
-                <div style={pdfFieldLineStyle}><strong>Matrícula:</strong> {requerente.matricula}</div>
-                <div style={pdfFieldLineStyle}><strong>E-mail:</strong> {requerente.email}</div>
-
-                <div style={pdfSectionTitleStyle}>MOTIVAÇÃO – PARA USO DO SISTEMA</div>
-                <div style={pdfFieldLineStyle}>{motivacaoMap[motivacao.motivacao as string] || "Não especificada"}</div>
-
-                <div style={pdfSectionTitleStyle}>PERFIL DE ACESSO</div>
-                {perfil.tipoPerfil === "existe" ? (
-                    <div style={pdfFieldLineStyle}><strong>Ambiente Existente:</strong> {perfil.nomeAmbiente}</div>
-                ) : (
-                    <div>
-                        <div style={pdfFieldLineStyle}><strong>Ambiente Não Existe. Funções necessárias:</strong></div>
-                        <div style={{ ...pdfParagraphStyle, whiteSpace: "pre-wrap", border: "1px solid #ccc", padding: "8px" }}>
-                            {perfil.descricaoFuncoes}
+                    {/* Sistema */}
+                    <div style={pdfSectionTitleStyle}>SISTEMA SOLICITADO</div>
+                    {sistemas.map(s => (
+                        <div key={s} style={pdfFieldLineStyle}>
+                            ☑&nbsp; {sistemasMap[s] || s}
                         </div>
+                    ))}
+
+                    {/* Dados do Requerente */}
+                    <div style={pdfSectionTitleStyle}>DADOS DO REQUERENTE</div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+                        {[
+                            ["Nome",      requerente.nome],
+                            ["CPF",       requerente.cpf],
+                            ["Cargo",     requerente.cargo],
+                            ["Função",    requerente.funcao || "N/A"],
+                            ["Lotação",   requerente.lotacao],
+                            ["Vínculo",   requerente.vinculo],
+                            ["Matrícula", requerente.matricula],
+                            ["E-mail",    requerente.email],
+                        ].map(([label, value]) => (
+                            <div key={label as string} style={pdfFieldLineStyle}>
+                                <strong style={{ color: NAVY }}>{label}:</strong>{" "}
+                                <span style={{ color: "#374151" }}>{value}</span>
+                            </div>
+                        ))}
                     </div>
-                )}
-            </PdfPageFrame>
 
-            {/* --- PÁGINA 2 --- */}
-            <PdfPageFrame>
-                <div style={pdfSectionTitleStyle}>TERMO DE RESPONSABILIDADE</div>
-                <p style={pdfParagraphStyle}>
-                    O requerente declarou estar ciente e concordou integralmente com as normas de uso, sigilo fiscal, intransferibilidade de credenciais e as responsabilidades civis, penais e administrativas referentes ao uso dos sistemas, conforme Termo de Responsabilidade (Anexo II) da IN 002/2024/GAB/SEMFAZ.
-                </p>
-
-                <div style={pdfSectionTitleStyle}>DADOS DO SUPERIOR IMEDIATO</div>
-                <div style={pdfFieldLineStyle}><strong>Nome:</strong> {superior.superiorNome}</div>
-                <div style={pdfFieldLineStyle}><strong>CPF:</strong> {superior.superiorCPF}</div>
-                <div style={pdfFieldLineStyle}><strong>Cargo:</strong> {superior.superiorCargo}</div>
-
-                {/* DATA FORMAL */}
-                <div style={{ textAlign: "center", marginTop: "100px", marginBottom: "50px", fontSize: "11pt" }}>
-                    {dataFormal}
-                </div>
-
-                {/* ASSINATURAS */}
-                <div style={{ display: "flex", marginTop: "150px", justifyContent: "space-between", textAlign: "center" }}>
-                    <div style={{ width: "45%" }}>
-                        <div style={{ borderTop: "1px solid #000", margin: "0 auto 8px", width: "100%" }}></div>
-                        <strong>Assinatura do Requerente</strong>
+                    {/* Motivação */}
+                    <div style={pdfSectionTitleStyle}>MOTIVAÇÃO – PARA USO DO SISTEMA</div>
+                    <div style={pdfFieldLineStyle}>
+                        ☑&nbsp; {motivacaoMap[motivacao.motivacao as string] || "Não especificada"}
                     </div>
-                    <div style={{ width: "45%" }}>
-                        <div style={{ borderTop: "1px solid #000", margin: "0 auto 8px", width: "100%" }}></div>
-                        <strong>Assinatura do Superior Imediato</strong>
+
+                    {/* Perfil de Acesso */}
+                    <div style={pdfSectionTitleStyle}>PERFIL DE ACESSO</div>
+                    {perfil.tipoPerfil === "existe" ? (
+                        <div style={pdfFieldLineStyle}>
+                            ☑&nbsp; <strong>Perfil de Acesso (Ambiente) já existe.</strong>{" "}
+                            <strong style={{ color: NAVY }}>Ambiente:</strong>{" "}
+                            <span style={{ color: "#374151" }}>{perfil.nomeAmbiente}</span>
+                        </div>
+                    ) : (
+                        <div>
+                            <div style={pdfFieldLineStyle}>
+                                ☑&nbsp; <strong>
+                                    Perfil de Acesso (Ambiente) não existe.
+                                    Descrever funções do trabalho e quais módulos e dados necessita acessar:
+                                </strong>
+                            </div>
+                            <div style={{
+                                ...pdfParagraphStyle,
+                                whiteSpace: "pre-wrap",
+                                border: `1px solid ${BORDER}`,
+                                padding: "6px 8px",
+                                marginLeft: "12px",
+                                color: "#374151",
+                            }}>
+                                {perfil.descricaoFuncoes}
+                            </div>
+                        </div>
+                    )}
+                </PdfPageFrame>
+
+                {/* ════════════════════ PÁGINA 2 ════════════════════ */}
+                <PdfPageFrame>
+                    {/* Termo de Responsabilidade */}
+                    <div style={pdfSectionTitleStyle}>TERMO DE RESPONSABILIDADE</div>
+                    <p style={{ ...pdfParagraphStyle, marginTop: "4px" }}>
+                        <strong>Declaro estar ciente de que:</strong>
+                    </p>
+                    <ol style={{ paddingLeft: "18px", margin: "0 0 8px 0" }}>
+                        {[
+                            "As informações armazenadas nos sistemas tributários da SEMFAZ de Porto Velho são sigilosas, conforme legislação vigente.",
+                            "É vedado o compartilhamento das credenciais de acesso (login e senha) com terceiros, sob pena de responsabilização administrativa, civil e criminal.",
+                            "O acesso aos sistemas tributários é monitorado e deve ser utilizado exclusivamente para fins profissionais legítimos.",
+                            "Ao utilizar os sistemas, devo respeitar o princípio do sigilo fiscal, conforme Art. 198 do Código Tributário Nacional.",
+                            "A senha é pessoal e intransferível, sendo de minha responsabilidade qualquer uso indevido.",
+                            "Devo comunicar imediatamente à SEMFAZ qualquer suspeita de violação de segurança ou acesso indevido.",
+                        ].map((item, i) => (
+                            <li key={i} style={{ fontSize: "8.5pt", color: "#374151", marginBottom: "3px" }}>
+                                {item}
+                            </li>
+                        ))}
+                    </ol>
+                    <div style={{
+                        fontSize: "8.5pt",
+                        fontWeight: "bold",
+                        color: NAVY,
+                        marginBottom: "10px",
+                    }}>
+                        ☑&nbsp; Declaro que li e aceito o termo de responsabilidade de uso de sistema
+                        tributário da IN 002/2024/GAB/SEMFAZ
                     </div>
-                </div>
 
-                {/* FOOTER ESPECÍFICO DO DOCUMENTO */}
-                <div style={{ position: "absolute", bottom: "30mm", left: "10mm", right: "10mm", textAlign: "center", fontSize: "8pt", color: "#666", borderTop: "1px solid #ccc", paddingTop: "10px" }}>
-                    Anexo I – Requerimento de Uso de Sistema<br />
-                    Instrução Normativa n.º 002/2024/GAB/SEMFAZ<br />
-                    Documento gerado eletronicamente em {dataAtual}
-                </div>
-            </PdfPageFrame>
+                    {/* Dados do Superior Imediato */}
+                    <div style={pdfSectionTitleStyle}>DADOS DO SUPERIOR IMEDIATO</div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0 16px" }}>
+                        {[
+                            ["Nome",  superior.superiorNome],
+                            ["CPF",   superior.superiorCPF],
+                            ["Cargo", superior.superiorCargo],
+                        ].map(([label, value]) => (
+                            <div key={label as string} style={pdfFieldLineStyle}>
+                                <strong style={{ color: NAVY }}>{label}:</strong>{" "}
+                                <span style={{ color: "#374151" }}>{value}</span>
+                            </div>
+                        ))}
+                    </div>
 
-        </div>
-    );
-});
+                    {/* Data formal */}
+                    <div style={{
+                        textAlign: "center",
+                        marginTop: "60px",
+                        marginBottom: "40px",
+                        fontSize: "10pt",
+                    }}>
+                        {dataFormal}
+                    </div>
+
+                    {/* Assinaturas */}
+                    <div style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        marginTop: "60px",
+                        textAlign: "center",
+                    }}>
+                        {[
+                            "Assinatura do Requerente",
+                            "Assinatura do Superior Imediato",
+                        ].map((label) => (
+                            <div key={label} style={{ width: "45%" }}>
+                                <div style={{
+                                    borderTop: "1px solid #000",
+                                    marginBottom: "6px",
+                                }} />
+                                <strong style={{ fontSize: "9pt" }}>{label}</strong>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div style={{
+                        textAlign: "center",
+                        fontSize: "7.5pt",
+                        color: GRAY,
+                        marginTop: "8px",
+                        fontStyle: "italic",
+                    }}>
+                        Este documento pode ser assinado digitalmente pelo GOV.BR, SEI ou por outro meio certificado.
+                    </div>
+                </PdfPageFrame>
+
+            </div>
+        );
+    }
+);
+
 RequerimentoPDF.displayName = "RequerimentoPDF";

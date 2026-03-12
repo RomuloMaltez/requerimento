@@ -1,17 +1,15 @@
 "use client";
 
-import { useState, useRef } from "react";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import { useState } from "react";
 import SistemaSection from "@/components/SistemaSection";
 import DadosRequerenteSection from "@/components/DadosRequerenteSection";
 import MotivacaoSection from "@/components/MotivacaoSection";
 import PerfilAcessoSection from "@/components/PerfilAcessoSection";
 import DataRequerimentoSection from "@/components/DataRequerimentoSection";
 import SuperiorImediatoSection from "@/components/SuperiorImediatoSection";
-import { RequerimentoPDF } from "@/components/RequerimentoPDF";
 import TermoResponsabilidadeSection from "@/components/TermoResponsabilidadeSection";
 import { obterOpcoesAmbiente } from "@/utils/ambientes";
+import { downloadRequerimentoPdf } from "@/pdf/create-requerimento-pdf";
 import { z } from "zod";
 
 // Atualização da Interface
@@ -127,7 +125,6 @@ export default function RequerimentoPage() {
     });
 
     const [isGeneratingPdf, setIsGeneratingPdf] = useState(false);
-    const pdfRef = useRef<HTMLDivElement>(null);
 
     // Calcula dinamicamente a lista de opções com base no que foi preenchido antes
     const opcoesAmbienteAtualizadas = obterOpcoesAmbiente(
@@ -137,40 +134,16 @@ export default function RequerimentoPage() {
     );
 
     async function generatePdf() {
-        if (!pdfRef.current) {
-            alert("Erro ao preparar o conteúdo do PDF.");
-            return;
-        }
-
         setIsGeneratingPdf(true);
-
         try {
-            // Pequeno delay para garantir que o React renderizou o componente oculto
-            await new Promise<void>((resolve) => setTimeout(resolve, 300));
-
-            const pages = pdfRef.current.querySelectorAll<HTMLElement>(".pdf-page");
-            if (!pages.length) throw new Error("Nenhuma página do PDF foi encontrada.");
-
-            const pdf = new jsPDF("p", "mm", "a4");
-
-            for (let i = 0; i < pages.length; i++) {
-                if (i > 0) pdf.addPage();
-
-                const canvas = await html2canvas(pages[i], {
-                    scale: 2, // Boa resolução
-                    useCORS: true,
-                    logging: false,
-                    backgroundColor: "#ffffff",
-                    width: pages[i].scrollWidth,
-                    height: pages[i].scrollHeight,
-                });
-
-                const imgData = canvas.toDataURL("image/jpeg", 0.95);
-                pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-            }
-
-            pdf.save(`requerimento_sistemas_${dadosRequerente.cpf.replace(/\D/g, '')}.pdf`);
-
+            await downloadRequerimentoPdf({
+                sistemas: sistemasSelecionados,
+                requerente: dadosRequerente,
+                motivacao: dadosMotivacao,
+                perfil: dadosPerfil,
+                superior: dadosSuperior,
+                dataRequerimento,
+            });
         } catch (error) {
             console.error("Erro ao gerar PDF:", error);
             alert("Erro ao gerar PDF. Tente novamente.");
@@ -351,15 +324,6 @@ export default function RequerimentoPage() {
                         </button>
                     </div>
 
-                    <RequerimentoPDF
-                        ref={pdfRef}
-                        sistemas={sistemasSelecionados}
-                        requerente={dadosRequerente}
-                        motivacao={dadosMotivacao}
-                        perfil={dadosPerfil}
-                        superior={dadosSuperior}
-                        dataRequerimento={dataRequerimento}
-                    />
                 </form>
             </div>
         </div>

@@ -7,6 +7,7 @@
 const PDF_COLORS = {
   primaryBlue:  '#1e3a5f',
   accentGreen:  '#70b643',
+  darkGreen:    '#2D5016',
   accentYellow: '#f2c94c',
   textDark:     '#374151',
   textMedium:   '#6b7280',
@@ -25,7 +26,7 @@ const PDF_STYLES = {
   },
   headerSubtitle: {
     fontSize: 10,
-    color: PDF_COLORS.primaryBlue,
+    color: PDF_COLORS.darkGreen,
     alignment: 'center',
   },
   headerCaption: {

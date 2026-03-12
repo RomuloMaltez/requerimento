@@ -8,7 +8,7 @@ import {
   useState,
   type FormEvent,
 } from "react";
-import { Instagram, Search, User2 } from "lucide-react";
+import { Instagram, Search } from "lucide-react";
 
 import IlustracaoCidade from "@/components/ui/ilustracao-cidade";
 import LogoPrefeitura from "@/components/ui/logo-prefeitura";
@@ -161,7 +161,9 @@ const clearHighlights = () => {
 export default function Header() {
   const [query, setQuery] = useState("");
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [searchOpen, setSearchOpen] = useState(false);
   const feedbackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const showFeedback = useCallback((message: string) => {
     setFeedback(message);
@@ -256,73 +258,94 @@ export default function Header() {
           </div>
 
           <div className="order-2 flex flex-col gap-3 lg:order-3 lg:items-end">
-            <div className="flex w-full items-center justify-end gap-3 lg:w-[300px]">
-              <div className="flex items-center gap-2">
-                <a
-                  href="https://www.instagram.com/semec.pvh/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram da SEMEC"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-rose-100 bg-rose-50 text-[#E1306C] shadow-sm transition hover:border-rose-200 hover:bg-rose-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E1306C]"
-                >
-                  <Instagram size={18} aria-hidden />
-                </a>
-                <a
-                  href="https://wa.me/556999422066"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="WhatsApp da SEMEC"
-                  className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-emerald-100 bg-emerald-50 text-emerald-700 shadow-sm transition hover:border-emerald-200 hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-300"
-                >
-                  <WhatsappIcon size={18} aria-hidden />
-                </a>
-              </div>
+            {/* Linha de botões */}
+            <div className="flex w-full items-center justify-end gap-2 lg:w-[300px]">
+
+              {/* Instagram */}
               <a
-                href="https://nfse.portovelho.ro.gov.br/#/login"
+                href="https://www.instagram.com/semec.pvh/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 flex-1 items-center justify-center gap-2 rounded-md bg-[color:var(--pv-blue-900)] px-3 text-sm font-semibold text-white transition hover:bg-[color:var(--pv-blue-700)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[color:var(--pv-blue-700)]"
+                aria-label="Instagram da SEMEC"
+                className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-rose-50 text-[#E1306C] shadow-sm transition hover:bg-rose-100 hover:shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#E1306C]"
               >
-                <User2 size={18} aria-hidden />
-                Acessar o sistema
+                <Instagram size={26} aria-hidden />
               </a>
+
+              {/* WhatsApp */}
+              <a
+                href="https://wa.me/556999422066"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="WhatsApp da SEMEC"
+                className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700 shadow-sm transition hover:bg-emerald-100 hover:shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+              >
+                <WhatsappIcon size={26} aria-hidden />
+              </a>
+
+              {/* Busca (toggle) */}
+              <button
+                type="button"
+                aria-label={searchOpen ? "Fechar busca" : "Abrir busca"}
+                aria-expanded={searchOpen}
+                onClick={() => {
+                  setSearchOpen((prev) => {
+                    if (!prev) {
+                      setTimeout(() => searchInputRef.current?.focus(), 50);
+                    } else {
+                      setQuery("");
+                      clearHighlights();
+                    }
+                    return !prev;
+                  });
+                }}
+                className={`inline-flex h-16 w-16 items-center justify-center rounded-2xl shadow-sm transition hover:shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-400 ${
+                  searchOpen
+                    ? "bg-slate-100 text-slate-700"
+                    : "bg-white text-slate-500 hover:bg-slate-50 hover:text-slate-700"
+                }`}
+              >
+                <Search size={26} aria-hidden />
+              </button>
+
             </div>
 
-            <form
-              className="relative flex w-full flex-col gap-2 lg:w-[300px]"
-              onSubmit={handleSearch}
-              aria-label="Barra de busca do portal"
-            >
-              <div className="flex w-full items-center rounded-md border border-slate-200 bg-white shadow-sm focus-within:border-[color:var(--pv-blue-900)] focus-within:ring-2 focus-within:ring-[color:var(--pv-blue-900)]/10">
-                <label htmlFor="site-search" className="sr-only">
-                  O que você procura?
-                </label>
-                <span className="pl-3 text-slate-500">
-                  <Search size={18} aria-hidden />
-                </span>
-                <input
-                  id="site-search"
-                  name="search"
-                  type="search"
-                  minLength={3}
-                  value={query}
-                  onChange={(event) => setQuery(event.target.value)}
-                  placeholder="O que você procura?"
-                  className="w-full border-0 bg-transparent px-3 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
-                />
-                <button
-                  type="submit"
-                  className="rounded-r-md bg-[color:var(--pv-yellow-500)] px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400"
-                >
-                  Buscar
-                </button>
-              </div>
-              {feedback && (
-                <p className="text-xs font-medium text-[color:var(--pv-blue-900)]">
-                  {feedback}
-                </p>
-              )}
-            </form>
+            {/* Barra de busca — só aparece quando searchOpen = true */}
+            {searchOpen && (
+              <form
+                className="relative flex w-full flex-col gap-2 lg:w-[300px]"
+                onSubmit={handleSearch}
+                aria-label="Barra de busca do portal"
+              >
+                <div className="flex w-full items-center rounded-2xl border border-slate-200 bg-white shadow-sm focus-within:border-[color:var(--pv-blue-900)] focus-within:ring-2 focus-within:ring-[color:var(--pv-blue-900)]/10">
+                  <label htmlFor="site-search" className="sr-only">
+                    O que você procura?
+                  </label>
+                  <input
+                    ref={searchInputRef}
+                    id="site-search"
+                    name="search"
+                    type="search"
+                    minLength={3}
+                    value={query}
+                    onChange={(event) => setQuery(event.target.value)}
+                    placeholder="O que você procura?"
+                    className="w-full border-0 bg-transparent pl-4 pr-2 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none"
+                  />
+                  <button
+                    type="submit"
+                    className="rounded-r-2xl bg-[color:var(--pv-yellow-500)] px-4 py-2 text-sm font-semibold text-slate-900 transition hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-400"
+                  >
+                    Buscar
+                  </button>
+                </div>
+                {feedback && (
+                  <p className="text-xs font-medium text-[color:var(--pv-blue-900)]">
+                    {feedback}
+                  </p>
+                )}
+              </form>
+            )}
           </div>
         </div>
       </header>
